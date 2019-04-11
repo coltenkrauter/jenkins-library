@@ -91,4 +91,5 @@ def get_duration_string(start, end) {
 def plural(value) {
     return (value.toInteger() == 0 || value.toInteger() > 1) ? "s" : ""
 }
+
 return this
