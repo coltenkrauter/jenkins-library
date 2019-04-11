@@ -1,0 +1,7 @@
+BUILD_LOG_SLACK_CHANNEL: testing-jenkins
+DOCUMENTATION_URL: https://github.com/coltenkrauter/jenkins-library
+GITHUB_API_URL: https://api.github.com
+GITHUB_TOKEN_CRED_ID: 
+GITHUB_URL: https://github.com
+MUTE_SLACK: false
+PROJECT_COLOR: "#0099cc"
