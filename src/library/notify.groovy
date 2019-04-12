@@ -124,7 +124,7 @@ def slack(message, status) {
                     color: "danger",
                     fields: [
                         [
-                            value: "@$username, <$build_url|build #$build_number> $errorMessage :occ_build_failed:"
+                            value: "@$username, <$build_url|build #$build_number> $errorMessage :fire:"
                         ]
                     ],
                     markdown: ["pretext"]
