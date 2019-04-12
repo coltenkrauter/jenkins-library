@@ -55,8 +55,8 @@ def slack(message, status) {
         channel = Globals.config.BUILD_LOG_SLACK_CHANNEL
 
         // Set the build urls to Blue Ocean jenkins
-        build_url = "${env.JENKINS_URL}blue/organizations/jenkins/SCM%2F${repo_name}/detail/${branch_name}/$build_number/"
-        log_url = "${env.JENKINS_URL}blue/rest/organizations/jenkins/pipelines/SCM/pipelines/${repo_name}/branches/${branch_name}/runs/$build_number/log"
+        build_url = "${env.JENKINS_URL}blue/organizations/jenkins/Colten%20Krauter%2F${repo_name}/detail/${branch_name}/$build_number/"
+        log_url = "${env.JENKINS_URL}blue/rest/organizations/jenkins/pipelines/Colten%20Krauter/pipelines/${repo_name}/branches/${branch_name}/runs/$build_number/log"
         changes_url = "${build_url}changes/"
 
         if (status == "START") {
