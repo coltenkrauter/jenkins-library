@@ -71,6 +71,11 @@ def slack(message, status) {
                             short: true
                         ],
                         [
+                            title: "Commiter",
+                            value: name,
+                            short: true
+                        ],
+                        [
                             title: "Branch",
                             value: "<$branch_url|$branch_name>",
                             short: true
@@ -78,11 +83,6 @@ def slack(message, status) {
                         [
                             title: "Repository",
                             value: "<$repo_url|$repo_name>",
-                            short: true
-                        ],
-                        [
-                            title: "Commiter",
-                            value: name,
                             short: true
                         ]
                     ]
