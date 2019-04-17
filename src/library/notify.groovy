@@ -66,6 +66,11 @@ def slack(message, status) {
                     fallback: "$branch_name execution #$build_number",
                     fields: [
                         [
+                            title: "Build",
+                            value: "<$build_url|$build_number>",
+                            short: true
+                        ],
+                        [
                             title: "Branch",
                             value: "<$branch_url|$branch_name>",
                             short: true
@@ -90,6 +95,16 @@ def slack(message, status) {
                             type: "button",
                             text: "Jenkins",
                             url: build_url
+                        ],
+                        [
+                            type: "button",
+                            text: "Commit",
+                            url: commit_url
+                        ],
+                        [
+                            type: "button",
+                            text: "Changes",
+                            url: changes_url
                         ]
                     ]
                 ]
@@ -106,25 +121,12 @@ def slack(message, status) {
             return new Date()
 
         } else if (status == "ERROR") {
-            String[] errorMessages = [
-                "went down, down, down in flames", 
-                "crashed and burned", 
-                "is burning like the Peshtigo fire", 
-                "has overheated to the point of ignition",
-                "has blown up like mount vesuvius",
-                "wishes it weren't on fire",
-                "... the build, the build, the build is on fire",
-            ]
-            random = new Random()
-            index = random.nextInt(errorMessages.length)
-            errorMessage = errorMessages[index]
-
             attachment = [
                 [
                     color: "danger",
                     fields: [
                         [
-                            value: "@$username, <$build_url|build #$build_number> $errorMessage :fire:"
+                            value: "@here, *<$repo_url|$repo_name>/<$branch_url|$branch_name>* - <$build_url|build #$build_number> failed :face_with_monocle:"
                         ]
                     ],
                     markdown: ["pretext"]
@@ -135,8 +137,8 @@ def slack(message, status) {
                     actions: [
                         [
                             type: "button",
-                            text: "Log",
-                            url: log_url
+                            text: "Jenkins",
+                            url: build_url
                         ]
                     ]
                 ]
