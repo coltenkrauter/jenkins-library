@@ -67,7 +67,7 @@ def slack(message, status) {
                     fields: [
                         [
                             title: "Build",
-                            value: "<$build_url|$build_number>",
+                            value: "<$build_url|#$build_number>",
                             short: true
                         ],
                         [
