@@ -76,13 +76,13 @@ def slack(message, status) {
                             short: true
                         ],
                         [
-                            title: "Branch",
-                            value: "<$branch_url|$branch_name>",
+                            title: "Repository",
+                            value: "<$repo_url|$repo_name>",
                             short: true
                         ],
                         [
-                            title: "Repository",
-                            value: "<$repo_url|$repo_name>",
+                            title: "Branch",
+                            value: "<$branch_url|$branch_name>",
                             short: true
                         ]
                     ]
