@@ -2,7 +2,7 @@ package library
 
 import groovy.json.JsonSlurperClassic
 
-def get_git_payload(gitVars, config) {
+def set_git_vars(gitVars) {
     try {
 
         env.GITHUB_API_URL = "https://api.github.com"
