@@ -32,7 +32,7 @@ def slack(message, status) {
         if (status == "START") {
             attachment = [
                 [
-                    color: Globals.config.PROJECT_COLOR,
+                    color: env.PROJECT_COLOR,
                     fallback: "${env.GIT_BRANCH_NAME} execution #${env.BUILD_NUMBER}",
                     fields: [
                         [
@@ -58,7 +58,7 @@ def slack(message, status) {
                     ]
                 ],
                 [
-                    color: Globals.config.PROJECT_COLOR,
+                    color: env.PROJECT_COLOR,
                     fallback: "",
                     actions: [
                         [
