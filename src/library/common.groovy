@@ -28,7 +28,7 @@ def set_git_vars(gitVars) {
 
             env.GIT_COMMITTER_NAME = json.commit.author.name
             env.GIT_COMMITTER_EMAIL = json.commit.author.email
-            env.GIT_COMMITTER_USERNAME = env.GIT_EMAIL.split("@")[0]
+            env.GIT_COMMITTER_USERNAME = env.GIT_COMMITTER_EMAIL.split("@")[0]
             env.GIT_BRANCH_NAME = env.BRANCH_NAME
             env.GIT_REPO_URL = "${env.GITHUB_URL}/${env.GIT_OWNER}/${env.GIT_REPO_NAME}"
             env.GIT_BRANCH_URL = "${env.GIT_REPO_URL}/tree/${env.BRANCH_NAME}"
