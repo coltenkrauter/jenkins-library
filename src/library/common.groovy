@@ -35,8 +35,6 @@ def set_git_vars(gitVars) {
             env.GIT_COMMIT_SHORT = env.GIT_COMMIT.take(7)
             env.GIT_COMMIT_URL = "${env.GIT_REPO_URL}/commit/${env.GIT_COMMIT}}"
 
-            echo sh(script: 'env|sort', returnStdout: true)
-            echo "Made it here"
         }
     } catch (err) {
         echo "common.groovy() failed: ${err}"
