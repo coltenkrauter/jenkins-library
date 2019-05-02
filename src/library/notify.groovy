@@ -3,38 +3,17 @@ package library
 import groovy.json.JsonOutput
 import java.time.Instant;
 
-class Globals {
-   static String threadId = ""
-   static Object githubData = []
-   static stages = [:]
-   static common = null
-   static config = null
-   static buildStart = null
-   static success = true
-}
-
-def init(git_vars, buildStart) {
-    // Load config file
-    // Note: readYaml requires the "Pipeline Utility Steps" plugin
-    Globals.config = readYaml file: "jenkins/config.yaml"
-    
-    Globals.common = new common()
-
-    // Get GitHub commit payload
-    Globals.githubData = Globals.common.get_git_payload(git_vars, Globals.config)
-    Globals.buildStart = buildStart;
-
-    
-}
-
 def slack(message, status) {
+    env.BUILD_LOG_SLACK_CHANNEL = "build-log"
+    env.BUILD_LOG_SLACK_THREAD = ""
+
     try {
-        if (Globals.threadId == "" && status != "START") {
+        if (env.BUILD_LOG_SLACK_THREAD == "" && status != "START") {
             echo("You must use notify.start() first.")
             return
         }
 
-        channel = Globals.config.BUILD_LOG_SLACK_CHANNEL
+        channel = env.BUILD_LOG_SLACK_CHANNEL
         build_user = env.GIT_COMMITTER_NAME
 
         try {
@@ -102,12 +81,12 @@ def slack(message, status) {
             ]
 
             // Send start slack message to channel
-            Globals.threadId = slackSend(channel: channel, attachments: JsonOutput.toJson(attachment)).threadId
+            env.BUILD_LOG_SLACK_THREAD = slackSend(channel: channel, attachments: JsonOutput.toJson(attachment)).threadId
 
             // Send first thread message
             update("Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started")
         } else if (status == "UPDATE") {
-            slackSend(channel: Globals.threadId, message: message)
+            slackSend(channel: env.BUILD_LOG_SLACK_THREAD, message: message)
             echo message
             return new Date()
 
@@ -135,10 +114,10 @@ def slack(message, status) {
                 ]
             ]
 
-            slackSend(channel: Globals.threadId, replyBroadcast: true, attachments: JsonOutput.toJson(attachment))
+            slackSend(channel: env.BUILD_LOG_SLACK_THREAD, replyBroadcast: true, attachments: JsonOutput.toJson(attachment))
         } else if (status == "END") {
             color = "good"
-            if (!Globals.success)
+            if (!env.SUCCESS)
                 color = "danger"
 
             attachment = [
@@ -151,13 +130,13 @@ def slack(message, status) {
                         ],
                         [
                             title: "Duration",
-                            value: Globals.common.get_duration_string(Globals.buildStart, new Date())
+                            value: Globals.common.get_duration_string(env.BUILD_START, new Date())
                         ]
                     ],
                 ]
             ]
 
-            slackSend(channel: Globals.threadId, attachments: JsonOutput.toJson(attachment))
+            slackSend(channel: env.BUILD_LOG_SLACK_THREAD, attachments: JsonOutput.toJson(attachment))
         }
     } catch (err) {
         echo "notify.slack() failed: ${err}"
@@ -172,7 +151,7 @@ def buildStart() {
 
 def build_end() {
     messages = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed"
-        if (Globals.success)
+        if (env.SUCCESS)
         // Send last slack message
         message = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> finished successfully"
     
@@ -198,7 +177,7 @@ def stage_end(stage, start_date, end_date) {
 }
 
 def error(message) {
-    Globals.success = false
+    env.SUCCESS = false
     slack(message, "ERROR")
 }
 
