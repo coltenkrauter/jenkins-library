@@ -41,7 +41,7 @@ def slack(message, status) {
         }
 
         channel = Globals.config.BUILD_LOG_SLACK_CHANNEL
-        build_user = env.GIT_NAME
+        build_user = env.GIT_COMMITTER_NAME
 
         try {
             wrap([$class: 'BuildUser']) {
@@ -69,7 +69,7 @@ def slack(message, status) {
                         ],
                         [
                             title: "Commiter",
-                            value: env.GIT_NAME,
+                            value: env.GIT_COMMITTER_NAME,
                             short: true
                         ],
                         [
