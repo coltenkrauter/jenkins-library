@@ -19,7 +19,7 @@ def get_git_payload(gitVars, config) {
                 consoleLogResponseBody: false, 
                 contentType: 'APPLICATION_JSON', 
                 httpMode: 'GET', 
-                url: "${env.GITHUB_API_URL}/repos/${env.GIT_OWNER}/${env.GIT_REPO_NAME}/commits/${env.GIT_COMMIT}}?access_token=$token", 
+                url: "${env.GITHUB_API_URL}/repos/${env.GIT_OWNER}/${env.GIT_REPO_NAME}/commits/${env.GIT_COMMIT}?access_token=$token", 
                 validResponseCodes: '200'
             )
 
