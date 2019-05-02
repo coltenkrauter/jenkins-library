@@ -3,9 +3,10 @@ package library
 import groovy.json.JsonOutput
 import java.time.Instant;
 
+env.BUILD_LOG_SLACK_THREAD = ""
+
 def slack(message, status) {
     env.BUILD_LOG_SLACK_CHANNEL = "build-log"
-    env.BUILD_LOG_SLACK_THREAD = ""
 
     try {
         if (env.BUILD_LOG_SLACK_THREAD == "" && status != "START") {
