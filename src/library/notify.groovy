@@ -117,7 +117,7 @@ def slack(message, status) {
         } else if (status == "END") {
             
             color = "danger"
-            if (env.SUCCESS)
+            if (env.SUCCESS == "true")
                 color = "good"
                 
 
