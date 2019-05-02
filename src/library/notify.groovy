@@ -29,12 +29,6 @@ def init(git_vars, buildStart) {
 
 def slack(message, status) {
     try {
-        // Return if mute is true
-        if (Globals.config.MUTE_SLACK) {
-            echo("Slack messages have been muted")
-            return
-        }
-        
         if (Globals.threadId == "" && status != "START") {
             echo("You must use notify.start() first.")
             return
@@ -52,7 +46,7 @@ def slack(message, status) {
         } catch (err) {
 
         } finally {
-            
+
         }
 
 
