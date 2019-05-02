@@ -40,24 +40,7 @@ def slack(message, status) {
             return
         }
         
-        // Unpack GitHub Payload
-        name = Globals.githubData.commit.author.name
-        email = Globals.githubData.commit.author.email
-        username = email.split("@")[0]
-        branch_url = Globals.githubData.branch_url
-        branch_name = Globals.githubData.branch_name
-        repo_url = Globals.githubData.repo_url
-        repo_name = Globals.githubData.repo_name
-        commit_url = Globals.githubData.commit_url
-        commit_name = Globals.githubData.commit_name
-
-        build_number = env.BUILD_NUMBER
-        channel = Globals.config.BUILD_LOG_SLACK_CHANNEL
-
-        // Set the build urls to Blue Ocean jenkins
-        build_url = "${env.JENKINS_URL}blue/organizations/jenkins/Colten%20Krauter%2F${repo_name}/detail/${branch_name}/$build_number/"
-        log_url = "${env.JENKINS_URL}blue/rest/organizations/jenkins/pipelines/Colten%20Krauter/pipelines/${repo_name}/branches/${branch_name}/runs/$build_number/log"
-        changes_url = "${build_url}changes/"
+        
 
         if (status == "START") {
             attachment = [
