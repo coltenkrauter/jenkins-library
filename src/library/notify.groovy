@@ -17,18 +17,14 @@ def slack(message, status) {
         channel = env.BUILD_LOG_SLACK_CHANNEL
         build_user = env.GIT_COMMITTER_NAME
 
-        try {
-            wrap([$class: 'BuildUser']) {
-              build_user = BUILD_USER
-            //  build_user_id = BUILD_USER_ID
-            //  build_user_email = BUILD_USER_EMAIL
+
+        wrap([$class: 'BuildUser']) {
+            if (BUILD_USER != null) {
+                build_user = BUILD_USER
             }
-        } catch (err) {
-
-        } finally {
-
+        //  build_user_id = BUILD_USER_ID
+        //  build_user_email = BUILD_USER_EMAIL
         }
-
 
         if (status == "START") {
             attachment = [
