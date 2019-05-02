@@ -39,33 +39,47 @@ def slack(message, status) {
             echo("You must use notify.start() first.")
             return
         }
-        
-        
+
+        channel = Globals.config.BUILD_LOG_SLACK_CHANNEL
+        build_user = env.GIT_NAME
+
+        try {
+            wrap([$class: 'BuildUser']) {
+              build_user = BUILD_USER
+            //  build_user_id = BUILD_USER_ID
+            //  build_user_email = BUILD_USER_EMAIL
+            }
+        } catch (err) {
+
+        } finally {
+            
+        }
+
 
         if (status == "START") {
             attachment = [
                 [
                     color: Globals.config.PROJECT_COLOR,
-                    fallback: "$branch_name execution #$build_number",
+                    fallback: "${env.GIT_BRANCH_NAME} execution #${env.BUILD_NUMBER}",
                     fields: [
                         [
                             title: "Build",
-                            value: "<$build_url|#$build_number>",
+                            value: "<${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}>",
                             short: true
                         ],
                         [
                             title: "Commiter",
-                            value: name,
+                            value: env.GIT_NAME,
                             short: true
                         ],
                         [
                             title: "Repository",
-                            value: "<$repo_url|$repo_name>",
+                            value: "<${env.GIT_REPO_URL}|${env.GIT_REPO_NAME}>",
                             short: true
                         ],
                         [
                             title: "Branch",
-                            value: "<$branch_url|$branch_name>",
+                            value: "<${env.GIT_BRANCH_URL}|${env.GIT_BRANCH_NAME}>",
                             short: true
                         ]
                     ]
@@ -77,17 +91,17 @@ def slack(message, status) {
                         [
                             type: "button",
                             text: "Jenkins",
-                            url: build_url
+                            url: env.RUN_DISPLAY_URL
                         ],
                         [
                             type: "button",
                             text: "Commit",
-                            url: commit_url
+                            url: env.GIT_COMMIT_URL
                         ],
                         [
                             type: "button",
                             text: "Changes",
-                            url: changes_url
+                            url: env.RUN_CHANGES_DISPLAY_URL
                         ]
                     ]
                 ]
@@ -97,7 +111,7 @@ def slack(message, status) {
             Globals.threadId = slackSend(channel: channel, attachments: JsonOutput.toJson(attachment)).threadId
 
             // Send first thread message
-            update("Build <$build_url|#$build_number> started")
+            update("Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started")
         } else if (status == "UPDATE") {
             slackSend(channel: Globals.threadId, message: message)
             echo message
@@ -109,7 +123,7 @@ def slack(message, status) {
                     color: "danger",
                     fields: [
                         [
-                            value: "@here, *<$repo_url|$repo_name>/<$branch_url|$branch_name>* - <$build_url|build #$build_number> failed :face_with_monocle:"
+                            value: "@here, *<${env.GIT_REPO_URL}|${env.GIT_REPO_NAME}>/<${env.GIT_BRANCH_URL}|${env.GIT_BRANCH_NAME}>* - <${env.RUN_DISPLAY_URL}|build #${env.BUILD_NUMBER}> failed :face_with_monocle:"
                         ]
                     ],
                     markdown: ["pretext"]
@@ -121,7 +135,7 @@ def slack(message, status) {
                         [
                             type: "button",
                             text: "Jenkins",
-                            url: build_url
+                            url: env.RUN_DISPLAY_URL
                         ]
                     ]
                 ]
@@ -158,15 +172,15 @@ def slack(message, status) {
 }
 
 def buildStart() {
-    message = "Build <$build_url|#$build_number> started"
+    message = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started"
     slack(message, "START")
 }
 
 def build_end() {
-    messages = "Build <$build_url|#$build_number> failed"
+    messages = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed"
         if (Globals.success)
         // Send last slack message
-        message = "Build <$build_url|#$build_number> finished successfully"
+        message = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> finished successfully"
     
     slack(message, "END")
 }
