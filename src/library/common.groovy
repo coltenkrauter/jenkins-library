@@ -2,8 +2,6 @@ package library
 
 import groovy.json.JsonSlurperClassic
 
-env.TEST_TEST = "This is a test"
-
 def get_git_payload(gitVars, config) {
     env.GITIT_TEST = "This is a test"
     try {
@@ -28,18 +26,18 @@ def get_git_payload(gitVars, config) {
                 validResponseCodes: '200'
             )
 
-            def git_payload = []
+            def json = []
+            json = new JsonSlurperClassic().parseText(response.content)
 
-            git_payload = new JsonSlurperClassic().parseText(response.content)
-            git_payload.repo_name = "${git_repo}"
-            git_payload.repo_url = "$GITHUB_URL/$git_owner/$git_repo"
-            git_payload.branch_name = "${branch}"
-            git_payload.branch_url = "$GITHUB_URL/$git_owner/$git_repo/tree/$branch"
-            git_payload.commit_name = "${git_commit.take(7)}"
-            git_payload.commit_url = "$GITHUB_URL/$git_owner/$git_repo/commit/$git_commit"
-            git_payload.owner = "${git_owner}"
-            
-            return git_payload
+            echo json
+
+            env.GIT_REPO_NAME = "${git_repo}"
+            env.GIT_REPO_URL = "$GITHUB_URL/$git_owner/$git_repo"
+            env.GIT_BRANCH_NAME = "${branch}"
+            env.GIT_BRANCH_URL = "$GITHUB_URL/$git_owner/$git_repo/tree/$branch"
+            env.GIT_COMMIT_NAME = "${git_commit.take(7)}"
+            env.GIT_COMMIT_URL = "$GITHUB_URL/$git_owner/$git_repo/commit/$git_commit"
+            env.GIT_OWNER = "${git_owner}"
         }
     } catch (err) {
         echo "common.groovy() failed: ${err}"
