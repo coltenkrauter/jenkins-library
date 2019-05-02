@@ -2,6 +2,8 @@ package library
 
 import groovy.json.JsonSlurperClassic
 
+env.TEST_TEST = "This is a test"
+
 def get_git_payload(gitVars, config) {
     try {
         GITHUB_URL = config.GITHUB_URL
