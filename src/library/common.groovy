@@ -5,6 +5,7 @@ import groovy.json.JsonSlurperClassic
 env.TEST_TEST = "This is a test"
 
 def get_git_payload(gitVars, config) {
+    env.GITIT_TEST = "This is a test"
     try {
         GITHUB_URL = config.GITHUB_URL
         GITHUB_API_URL = config.GITHUB_API_URL
