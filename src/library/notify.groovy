@@ -131,7 +131,7 @@ def slack(message, status) {
                         ],
                         [
                             title: "Duration",
-                            value: Globals.common.get_duration_string(env.BUILD_START, new Date())
+                            value: get_duration_string(env.BUILD_START, new Date())
                         ]
                     ],
                 ]
@@ -172,7 +172,7 @@ def stage_end(stage, start_date) {
 }
 
 def stage_end(stage, start_date, end_date) {
-    duration = Globals.common.get_duration_string(start_date, end_date)
+    duration = get_duration_string(start_date, end_date)
     message = "Stage \"$stage\" finished in $duration"
     return update(message)
 }
@@ -180,6 +180,55 @@ def stage_end(stage, start_date, end_date) {
 def error(message) {
     env.SUCCESS = false
     slack(message, "ERROR")
+}
+
+
+def get_duration(start, end) {
+    def duration = groovy.time.TimeCategory.minus(
+      end,
+      start
+    )
+
+    values = [
+        "seconds" : duration.seconds,
+        "minutes" : duration.minutes,
+        "hours" : duration.hours,
+        "days" : duration.days,
+        "ago" : duration.ago,
+    ]
+
+    return values
+}
+
+def get_duration_string(start, end) {
+    values = get_duration(start, end)
+
+    seconds = values["seconds"]
+    message = "$seconds second" + plural(seconds)
+
+    minutes = values["minutes"]
+    if (minutes)
+        message = "$minutes minute" + plural(minutes) + ", $message"
+
+    hours = values["hours"]
+    if (hours)
+        message = "$hours hour" + plural(hours) + ", $message"
+
+    days = values["days"]
+    if (days)
+        message = "$days day" + plural(days) + ", $message"
+
+    message = message.replace(", 0 seconds", "")
+
+    if (message == "0 seconds") {
+        message = "<1 second"
+    }
+
+    return message
+}
+
+def plural(value) {
+    return (value.toInteger() == 0 || value.toInteger() > 1) ? "s" : ""
 }
 
 return this
