@@ -29,10 +29,10 @@ def get_git_payload(gitVars, config) {
             env.GIT_NAME = json.commit.author.name
             env.GIT_EMAIL = json.commit.author.email
             env.GIT_USERNAME = env.GIT_EMAIL.split("@")[0]
-            env.GIT_BRANCH_NAME = "${env.BRANCH_NAME}"
+            env.GIT_BRANCH_NAME = env.BRANCH_NAME
             env.GIT_REPO_URL = "${env.GITHUB_URL}/${env.GIT_OWNER}/${env.GIT_REPO_NAME}"
             env.GIT_BRANCH_URL = "${env.GIT_REPO_URL}/tree/${env.BRANCH_NAME}"
-            env.GIT_COMMIT_SHORT = "${env.GIT_COMMIT}.take(7)}"
+            env.GIT_COMMIT_SHORT = env.GIT_COMMIT.take(7)
             env.GIT_COMMIT_URL = "${env.GIT_REPO_URL}/commit/${env.GIT_COMMIT}}"
 
             echo sh(script: 'env|sort', returnStdout: true)
