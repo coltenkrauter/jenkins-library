@@ -115,9 +115,11 @@ def slack(message, status) {
 
             slackSend(channel: env.BUILD_LOG_SLACK_THREAD, replyBroadcast: true, attachments: JsonOutput.toJson(attachment))
         } else if (status == "END") {
-            color = "good"
-            if (!(env.SUCCESS as Boolean))
-                color = "danger"
+            
+            color = "danger"
+            if (env.SUCCESS)
+                color = "good"
+                
 
             attachment = [
                 [
