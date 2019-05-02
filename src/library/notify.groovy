@@ -52,7 +52,9 @@ def slack(message, status) {
                             value: "<${env.GIT_BRANCH_URL}|${env.GIT_BRANCH_NAME}>",
                             short: true
                         ]
-                    ]
+                    ],
+                    footer: "<${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> triggered by ${build_user}",
+                    ts: (new Date(env.BUILD_START)).getTime() / 1000
                 ],
                 [
                     color: env.PROJECT_COLOR,
