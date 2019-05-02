@@ -131,7 +131,7 @@ def slack(message, status) {
                         ],
                         [
                             title: "Duration",
-                            value: get_duration_string(env.BUILD_START, new Date())
+                            value: get_duration_string(new Date(env.BUILD_START), new Date())
                         ]
                     ],
                 ]
@@ -148,6 +148,8 @@ def slack(message, status) {
 def buildStart() {
     message = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started"
     slack(message, "START")
+
+    return new Date(env.BUILD_START)
 }
 
 def build_end() {
