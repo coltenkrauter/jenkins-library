@@ -4,7 +4,7 @@ import groovy.json.JsonOutput
 import java.time.Instant;
 
 // Constructor
-def notify() {
+public notify() {
     echo "I am a constructor"
 }
 // env.BUILD_LOG_SLACK_THREAD = ""
