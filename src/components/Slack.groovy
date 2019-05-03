@@ -10,14 +10,11 @@ class Slack {
     // Constructor
     Slack(pipeline) {
         this.pipeline = pipeline;
+        debug("In the Slack constructor");
 
-        pipeline.echo("In the Constructor");
-        pipeline.echo(pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED);
         if (!pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED) {
-            pipeline.echo("FOR THE FIRST TIME");
+            pipeline.debug("This will only be executed the first time Slack class is instantiated");
             pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED = "true";
-        } else {        
-            pipeline.echo("ALL THE REST");
         }
     }
     
