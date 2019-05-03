@@ -31,7 +31,7 @@ class GitHub {
                 pipeline.env.GIT_OWNER = tokens[1]
                 pipeline.env.GIT_REPO_NAME = tokens[2]
 
-                response = httpRequest (
+                def response = pipeline.httpRequest (
                     consoleLogResponseBody: false, 
                     contentType: 'APPLICATION_JSON', 
                     httpMode: 'GET', 
