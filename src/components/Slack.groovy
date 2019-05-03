@@ -31,7 +31,11 @@ class Slack {
     }
 
     def postMessage(channel, message) {
-        slackSend(channel: channel, message: message)
+        return slackSend(channel: channel, message: message).threadId;
+    }
+
+    def postAttachment(channel, attachment) {
+        return slackSend(channel: channel, attachments: JsonOutput.toJson(attachment)).threadId;
     }
 
     def get_duration(start, end) {
