@@ -62,18 +62,18 @@ class Slack {
     def get_duration_string(start, end) {
         def values = get_duration(start, end)
 
-        seconds = values["seconds"]
-        message = "$seconds second" + plural(seconds)
+        def seconds = values["seconds"]
+        def message = "$seconds second" + plural(seconds)
 
-        minutes = values["minutes"]
+        def minutes = values["minutes"]
         if (minutes)
             message = "$minutes minute" + plural(minutes) + ", $message"
 
-        hours = values["hours"]
+        def hours = values["hours"]
         if (hours)
             message = "$hours hour" + plural(hours) + ", $message"
 
-        days = values["days"]
+        def days = values["days"]
         if (days)
             message = "$days day" + plural(days) + ", $message"
 
