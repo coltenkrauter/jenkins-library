@@ -1,5 +1,6 @@
-//import components.Slack
+import components.Slack
 
 def call() {
-    notifyStageStart();
+    def slack = new Slack(this);
+    slack.echo("Heyyy");
 }

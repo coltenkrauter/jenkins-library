@@ -8,22 +8,22 @@ class Slack {
     def debug = true;
 
     // Constructor
-    @NonCPS
     Slack(pipeline) {
         this.pipeline = pipeline;
-        debug("In the Slack constructor");
 
         if (!pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED) {
-            pipeline.debug("This will only be executed the first time Slack class is instantiated");
+            // This will only be executed the first time Slack class is instantiated thanks to setting this env variable
             pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED = "true";
+            pipeline.env.BUILD_LOG_SLACK_CHANNEL = "build-log";
+            pipeline.env.BUILD_LOG_SLACK_THREAD = "";
+            pipeline.env.SUCCESS = "true";
         }
     }
     
     def echo(String message) {
         pipeline.echo(message);
     }
-    
-    @NonCPS
+
     def debug(String message) {
         if (debug) {
             echo(message);
