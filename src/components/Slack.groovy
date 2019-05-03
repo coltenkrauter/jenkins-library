@@ -9,10 +9,10 @@ class Slack {
 	// Constructor
     Slack(pipeline) {
     	this.pipeline = pipeline;
-    	plugins.echo("CONSTRUCTOR");
+    	pipeline.echo("CONSTRUCTOR");
     }
 
 	def test() {
-		plugins.echo("This is the SLACK CLASS");
+		pipeline.echo("This is the SLACK CLASS");
 	}
 }
