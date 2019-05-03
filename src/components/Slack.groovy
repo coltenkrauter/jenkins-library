@@ -20,7 +20,7 @@ class Slack {
 
             build_user = env.GIT_COMMITTER_NAME;
             pipeline.wrap([$class: 'BuildUser']) {
-                if (env.BUILD_USER) {
+                if (pipeline.env.BUILD_USER) {
                     build_user = BUILD_USER;
                 }
             }
