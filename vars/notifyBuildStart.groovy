@@ -3,13 +3,13 @@ import components.Slack
 def call() {
     def slack = new Slack(this);
     
-    build_user = pipeline.env.GIT_COMMITTER_NAME;
+    build_user = env.GIT_COMMITTER_NAME;
     wrap([$class: 'BuildUser']) {
         if (env.BUILD_USER) {
             build_user = BUILD_USER;
         }
     }
-    pipeline.env.BUILD_TRIGGER_USER = build_user;
+    env.BUILD_TRIGGER_USER = build_user;
 
     attachment = [
         [
