@@ -4,6 +4,7 @@ import groovy.json.JsonOutput
 import java.time.Instant;
 
 env.BUILD_LOG_SLACK_THREAD = ""
+env.SUCCESS = true
 
 def slack(message, status) {
     env.BUILD_LOG_SLACK_CHANNEL = "build-log"
