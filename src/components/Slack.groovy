@@ -15,8 +15,8 @@ class Slack {
         pipeline.echo(pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED);
         if (!pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED) {
             pipeline.echo("FOR THE FIRST TIME");
-        } else {
-            pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED = "true";            
+            pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED = "true";
+        } else {        
             pipeline.echo("ALL THE REST");
         }
     }
