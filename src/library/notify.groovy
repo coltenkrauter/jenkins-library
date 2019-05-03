@@ -3,7 +3,6 @@ package library
 import groovy.json.JsonOutput
 import java.time.Instant;
 
-class notify {
 // env.BUILD_LOG_SLACK_THREAD = ""
 def slack(message, status) {
     env.BUILD_LOG_SLACK_CHANNEL = "build-log"
@@ -239,5 +238,4 @@ def plural(value) {
     return (value.toInteger() == 0 || value.toInteger() > 1) ? "s" : ""
 }
 
-}
 return this
