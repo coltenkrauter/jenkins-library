@@ -8,6 +8,7 @@ class Slack {
     def debug = true;
 
     // Constructor
+    @NonCPS
     Slack(pipeline) {
         this.pipeline = pipeline;
         debug("In the Slack constructor");
