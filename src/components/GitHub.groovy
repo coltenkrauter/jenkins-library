@@ -27,9 +27,9 @@ class GitHub {
 
             pipeline.withCredentials([pipeline.string(credentialsId: pipeline.env.GITHUB_TOKEN_CRED_ID, variable: 'token')]) {
                 pipeline.env.GIT_COMMIT = commitVars.GIT_COMMIT
-                git_url_tokens = commitVars.GIT_URL.replace('.git', '').replace('https://', '').split('/')
-                pipeline.env.GIT_OWNER = git_url_tokens[1]
-                pipeline.env.GIT_REPO_NAME = git_url_tokens[2]
+                def tokens = commitVars.GIT_URL.replace('.git', '').replace('https://', '').split('/')
+                pipeline.env.GIT_OWNER = tokens[1]
+                pipeline.env.GIT_REPO_NAME = tokens[2]
 
                 response = httpRequest (
                     consoleLogResponseBody: false, 
