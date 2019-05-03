@@ -29,7 +29,7 @@ def call() {
                     short: true
                 ]
             ],
-            footer: "<${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> triggered by ${build_user}",
+            footer: "<${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> triggered by ${env.BUILD_TRIGGER_USER}",
             ts: (new Date(env.BUILD_START)).getTime() / 1000
         ],
         [
