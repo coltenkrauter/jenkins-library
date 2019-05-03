@@ -25,7 +25,7 @@ class GitHub {
             pipeline.env.GITHUB_TOKEN_CRED_ID = "build-server-github-integration";
             pipeline.env.GITHUB_URL = "https://github.com";
 
-            pipeline.withCredentials([string(credentialsId: pipeline.env.GITHUB_TOKEN_CRED_ID, variable: 'token')]) {
+            pipeline.withCredentials([pipeline.string(credentialsId: pipeline.env.GITHUB_TOKEN_CRED_ID, variable: 'token')]) {
                 pipeline.env.GIT_COMMIT = commitVars.GIT_COMMIT
                 git_url_tokens = commitVars.GIT_URL.replace('.git', '').replace('https://', '').split('/')
                 pipeline.env.GIT_OWNER = git_url_tokens[1]
