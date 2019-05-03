@@ -7,7 +7,7 @@ class Slack {
 	def plugins;
 
 	// Constructor
-    Slack(jenkins) {
+    Slack(plugins) {
     	this.plugins = plugins;
     }
 
