@@ -21,7 +21,8 @@ class Slack {
     def echo(String message) {
         pipeline.echo(message);
     }
-
+    
+    @NonCPS
     def debug(String message) {
         if (debug) {
             echo(message);
