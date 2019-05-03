@@ -5,6 +5,6 @@ import java.time.Instant;
 
 class Slack {
 	def test() {
-		echo("This is the SLACK CLASS");
+		System.out.println("This is the SLACK CLASS");
 	}
 }
