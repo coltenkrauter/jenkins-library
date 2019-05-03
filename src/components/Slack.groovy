@@ -4,11 +4,12 @@ import groovy.json.JsonOutput;
 import java.time.Instant;
 
 class Slack {
-	def plugins;
+	def pipeline;
 
 	// Constructor
-    Slack(plugins) {
-    	this.plugins = plugins;
+    Slack(pipeline) {
+    	this.pipeline = pipeline;
+    	plugins.echo("CONSTRUCTOR");
     }
 
 	def test() {
