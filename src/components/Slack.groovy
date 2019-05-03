@@ -12,7 +12,7 @@ class Slack {
         this.pipeline = pipeline;
 
         pipeline.echo("In the Constructor");
-        
+        pipeline.echo(pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED);
         if (!pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED) {
             pipeline.echo("FOR THE FIRST TIME");
         } else {
