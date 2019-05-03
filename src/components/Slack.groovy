@@ -38,6 +38,10 @@ class Slack {
         return pipeline.slackSend(channel: channel, attachments: JsonOutput.toJson(attachment)).threadId;
     }
 
+    def postAttachmentAndBroadcast(channel, attachment) {
+        return pipeline.slackSend(channel: channel, attachments: JsonOutput.toJson(attachment), replyBroadcast: true).threadId;
+    }
+
     def get_duration(start, end) {
         def duration = groovy.time.TimeCategory.minus(
           end,
