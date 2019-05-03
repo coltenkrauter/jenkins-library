@@ -19,8 +19,8 @@ class Slack {
             pipeline.env.SUCCESS = "true";
 
             String build_user = pipeline.env.GIT_COMMITTER_NAME;
-            wrap([$class: 'BuildUser']) {
-                if (env.BUILD_USER) {
+            pipeline.wrap([$class: 'BuildUser']) {
+                if (pipeline.env.BUILD_USER) {
                     build_user = BUILD_USER;
                 }
             }
