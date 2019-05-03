@@ -1,7 +1,7 @@
 import components.Slack
 
 def call() {
-    def slack = new Slack(this);
+    def slack = new Slack();
     slack.test();
     
     echo "yahyahyahyahyahyahyahyahyahyahyahyah"
