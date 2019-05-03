@@ -30,6 +30,55 @@ class Slack {
         }
     }
 
+    def postMessage(channel, message) {
+        slackSend(channel: channel, message: message)
+    }
 
-    
+    def get_duration(start, end) {
+        def duration = groovy.time.TimeCategory.minus(
+          end,
+          start
+        )
+
+        values = [
+            "seconds" : duration.seconds,
+            "minutes" : duration.minutes,
+            "hours" : duration.hours,
+            "days" : duration.days,
+            "ago" : duration.ago,
+        ]
+
+        return values
+    }
+
+    def get_duration_string(start, end) {
+        values = get_duration(start, end)
+
+        seconds = values["seconds"]
+        message = "$seconds second" + plural(seconds)
+
+        minutes = values["minutes"]
+        if (minutes)
+            message = "$minutes minute" + plural(minutes) + ", $message"
+
+        hours = values["hours"]
+        if (hours)
+            message = "$hours hour" + plural(hours) + ", $message"
+
+        days = values["days"]
+        if (days)
+            message = "$days day" + plural(days) + ", $message"
+
+        message = message.replace(", 0 seconds", "")
+
+        if (message == "0 seconds") {
+            message = "<1 second"
+        }
+
+        return message
+    }
+
+    def plural(value) {
+        return (value.toInteger() == 0 || value.toInteger() > 1) ? "s" : ""
+    }   
 }
