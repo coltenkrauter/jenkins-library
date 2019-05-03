@@ -24,8 +24,8 @@ class GitHub {
             pipeline.env.GITHUB_API_URL = "https://api.github.com";
             pipeline.env.GITHUB_TOKEN_CRED_ID = "build-server-github-integration";
             pipeline.env.GITHUB_URL = "https://github.com";
-
-            pipeline.withCredentials([pipeline.string(credentialsId: pipeline.env.GITHUB_TOKEN_CRED_ID, variable: 'token')]) {
+            def TOKEN;
+            pipeline.withCredentials([pipeline.string(credentialsId: pipeline.env.GITHUB_TOKEN_CRED_ID, variable: 'TOKEN')]) {
                 pipeline.env.GIT_COMMIT = commitVars.GIT_COMMIT
                 def tokens = commitVars.GIT_URL.replace('.git', '').replace('https://', '').split('/')
                 pipeline.env.GIT_OWNER = tokens[1]
@@ -35,7 +35,7 @@ class GitHub {
                     consoleLogResponseBody: false, 
                     contentType: 'APPLICATION_JSON', 
                     httpMode: 'GET', 
-                    url: "${pipeline.env.GITHUB_API_URL}/repos/${pipeline.env.GIT_OWNER}/${pipeline.env.GIT_REPO_NAME}/commits/${pipeline.env.GIT_COMMIT}?access_token=$token", 
+                    url: "${pipeline.env.GITHUB_API_URL}/repos/${pipeline.env.GIT_OWNER}/${pipeline.env.GIT_REPO_NAME}/commits/${pipeline.env.GIT_COMMIT}?access_token=${TOKEN}", 
                     validResponseCodes: '200'
                 )
 
