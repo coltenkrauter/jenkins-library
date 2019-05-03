@@ -18,13 +18,13 @@ class Slack {
             pipeline.env.BUILD_LOG_SLACK_THREAD = "";
             pipeline.env.SUCCESS = "true";
 
-            String build_user = pipeline.env.GIT_COMMITTER_NAME;
-            pipeline.wrap([$class: 'BuildUser']) {
-                if (pipeline.env.BUILD_USER) {
-                    build_user = BUILD_USER;
-                }
-            }
-            pipeline.env.BUILD_TRIGGER_USER = build_user;
+            //String build_user = pipeline.env.GIT_COMMITTER_NAME;
+            //pipeline.wrap([$class: 'BuildUser']) {
+            //    if (pipeline.env.BUILD_USER) {
+            //        build_user = BUILD_USER;
+            //    }
+            //}
+            //pipeline.env.BUILD_TRIGGER_USER = build_user;
         }
     }
     
