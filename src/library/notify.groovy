@@ -3,10 +3,6 @@ package library
 import groovy.json.JsonOutput
 import java.time.Instant;
 
-// Constructor
-public notify() {
-    echo "I am a constructor"
-}
 // env.BUILD_LOG_SLACK_THREAD = ""
 def slack(message, status) {
     env.BUILD_LOG_SLACK_CHANNEL = "build-log"
