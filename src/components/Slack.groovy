@@ -48,7 +48,7 @@ class Slack {
           start
         )
 
-        values = [
+        def values = [
             "seconds" : duration.seconds,
             "minutes" : duration.minutes,
             "hours" : duration.hours,
@@ -56,11 +56,11 @@ class Slack {
             "ago" : duration.ago,
         ]
 
-        return values
+        return values;
     }
 
     def get_duration_string(start, end) {
-        values = get_duration(start, end)
+        def values = get_duration(start, end)
 
         seconds = values["seconds"]
         message = "$seconds second" + plural(seconds)
@@ -83,7 +83,7 @@ class Slack {
             message = "<1 second"
         }
 
-        return message
+        return message;
     }
 
     def plural(value) {
