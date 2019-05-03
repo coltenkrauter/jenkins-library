@@ -1,6 +1,9 @@
 import components.Slack
 
-def call() {
+def call(MESSAGE) {
     def slack = new Slack(this);
-    slack.echo("Heyyy");
+    
+    slack.postMessage(env.BUILD_LOG_SLACK_THREAD, MESSAGE);
+
+    return new Date();
 }
