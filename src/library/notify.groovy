@@ -239,5 +239,5 @@ def plural(value) {
     return (value.toInteger() == 0 || value.toInteger() > 1) ? "s" : ""
 }
 
-return this
 }
+return this
