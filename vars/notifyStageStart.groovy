@@ -1,7 +1,8 @@
-//import components.Slack
+import components.Slack
 
 def call() {
-    echo "END END END END END END END"
+    def slack = new Slack(this);
+    slack.test();
     
-    echo "yah"
+    echo "yahyahyahyahyahyahyahyahyahyahyahyah"
 }
