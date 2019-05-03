@@ -19,38 +19,33 @@ class GitHub {
         }
     }
     
-    def setEnvVars(commitVars) {
+    def setEnvVars(commitVars, TOKEN) {
         try {
-            pipeline.env.GITHUB_API_URL = "https://api.github.com";
-            pipeline.env.GITHUB_TOKEN_CRED_ID = "build-server-github-integration";
-            pipeline.env.GITHUB_URL = "https://github.com";
-            def TOKEN;
-            pipeline.withCredentials([pipeline.string(credentialsId: pipeline.env.GITHUB_TOKEN_CRED_ID, variable: 'TOKEN')]) {
-                pipeline.env.GIT_COMMIT = commitVars.GIT_COMMIT
-                def tokens = commitVars.GIT_URL.replace('.git', '').replace('https://', '').split('/')
-                pipeline.env.GIT_OWNER = tokens[1]
-                pipeline.env.GIT_REPO_NAME = tokens[2]
+            pipeline.env.GIT_COMMIT = commitVars.GIT_COMMIT
+            def tokens = commitVars.GIT_URL.replace('.git', '').replace('https://', '').split('/')
+            pipeline.env.GIT_OWNER = tokens[1]
+            pipeline.env.GIT_REPO_NAME = tokens[2]
 
-                def response = pipeline.httpRequest (
-                    consoleLogResponseBody: false, 
-                    contentType: 'APPLICATION_JSON', 
-                    httpMode: 'GET', 
-                    url: "${pipeline.env.GITHUB_API_URL}/repos/${pipeline.env.GIT_OWNER}/${pipeline.env.GIT_REPO_NAME}/commits/${pipeline.env.GIT_COMMIT}?access_token=${TOKEN}", 
-                    validResponseCodes: '200'
-                )
+            def response = pipeline.httpRequest (
+                consoleLogResponseBody: false, 
+                contentType: 'APPLICATION_JSON', 
+                httpMode: 'GET', 
+                url: "${pipeline.env.GITHUB_API_URL}/repos/${pipeline.env.GIT_OWNER}/${pipeline.env.GIT_REPO_NAME}/commits/${pipeline.env.GIT_COMMIT}?access_token=${TOKEN}", 
+                validResponseCodes: '200'
+            )
 
-                def json = []
-                json = new JsonSlurperClassic().parseText(response.content)
+            def json = []
+            json = new JsonSlurperClassic().parseText(response.content)
 
-                pipeline.env.GIT_COMMITTER_NAME = json.commit.author.name
-                pipeline.env.GIT_COMMITTER_EMAIL = json.commit.author.email
-                pipeline.env.GIT_COMMITTER_USERNAME = pipeline.env.GIT_COMMITTER_EMAIL.split("@")[0]
-                pipeline.env.GIT_BRANCH_NAME = pipeline.env.BRANCH_NAME
-                pipeline.env.GIT_REPO_URL = "${pipeline.env.GITHUB_URL}/${pipeline.env.GIT_OWNER}/${pipeline.env.GIT_REPO_NAME}"
-                pipeline.env.GIT_BRANCH_URL = "${pipeline.env.GIT_REPO_URL}/tree/${pipeline.env.BRANCH_NAME}"
-                pipeline.env.GIT_COMMIT_SHORT = pipeline.env.GIT_COMMIT.take(7)
-                pipeline.env.GIT_COMMIT_URL = "${pipeline.env.GIT_REPO_URL}/commit/${pipeline.env.GIT_COMMIT}}"
-            }
+            pipeline.env.GIT_COMMITTER_NAME = json.commit.author.name
+            pipeline.env.GIT_COMMITTER_EMAIL = json.commit.author.email
+            pipeline.env.GIT_COMMITTER_USERNAME = pipeline.env.GIT_COMMITTER_EMAIL.split("@")[0]
+            pipeline.env.GIT_BRANCH_NAME = pipeline.env.BRANCH_NAME
+            pipeline.env.GIT_REPO_URL = "${pipeline.env.GITHUB_URL}/${pipeline.env.GIT_OWNER}/${pipeline.env.GIT_REPO_NAME}"
+            pipeline.env.GIT_BRANCH_URL = "${pipeline.env.GIT_REPO_URL}/tree/${pipeline.env.BRANCH_NAME}"
+            pipeline.env.GIT_COMMIT_SHORT = pipeline.env.GIT_COMMIT.take(7)
+            pipeline.env.GIT_COMMIT_URL = "${pipeline.env.GIT_REPO_URL}/commit/${pipeline.env.GIT_COMMIT}}"
+        
         } catch (err) {
             echo "common.groovy() failed: ${err}"
             throw err
