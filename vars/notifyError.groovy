@@ -11,7 +11,7 @@ def call() {
                 color: "danger",
                 fields: [
                     [
-                        value: "@here, *<${env.GIT_REPO_URL}|${env.GIT_REPO_NAME}>/<${env.GIT_BRANCH_URL}|${env.GIT_BRANCH_NAME}>* - <${env.RUN_DISPLAY_URL}|build #${env.BUILD_NUMBER}> failed :face_with_monocle:"
+                        value: "@here, *<${env.GIT_REPO_URL}|${env.GIT_REPO_NAME}>/<${env.GIT_BRANCH_URL}|${env.GIT_BRANCH_NAME}>* - build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed :face_with_monocle:"
                     ]
                 ],
                 markdown: ["pretext"]
@@ -32,7 +32,7 @@ def call() {
         // Post message in Slack thread and broadcast to channel
         slack.postAttachment(env.BUILD_LOG_SLACK_THREAD, attachment);
         } else {
-            slackSend(message: "@here, <${env.RUN_DISPLAY_URL}|build #${env.BUILD_NUMBER}> failed :face_with_monocle:");
+            slackSend(message: "@here, build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed :face_with_monocle:", color: "danger");
         }
 
     // Return build start date
