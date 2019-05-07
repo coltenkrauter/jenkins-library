@@ -1,6 +1,6 @@
 import components.Slack
 
-def call(STAGENAME) {
+def call() {
     def slack = new Slack(this);
     DURATION = slack.get_duration_string(new Date(env.BUILD_START), new Date());
 
