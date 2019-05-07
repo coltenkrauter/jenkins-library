@@ -33,8 +33,6 @@ def call() {
             slackSend(message: "@here, build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed :face_with_monocle:", color: "danger");
         }
 
-    env.SUCCESS = "false";
-    
     // Return build start date
     return new Date(env.BUILD_START);
 }
