@@ -6,7 +6,8 @@ def call(STAGENAME) {
 
     color = "danger";
     message = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed";
-    if (env.SUCCESS) {
+    
+    if (env.SUCCESS && env.SUCCESS == "true") {
     	color = "good";
         message = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> finished successfully";
     }
