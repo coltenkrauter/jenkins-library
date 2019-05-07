@@ -31,7 +31,7 @@ def call() {
 
         // Post message in Slack thread and broadcast to channel
         slack.postAttachment(env.BUILD_LOG_SLACK_THREAD, attachment);
-        } else () {
+        } else {
             slackSend(message: "@here, <${env.RUN_DISPLAY_URL}|build #${env.BUILD_NUMBER}> failed :face_with_monocle:");
         }
 
