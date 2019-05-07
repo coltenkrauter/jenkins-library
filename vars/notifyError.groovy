@@ -1,7 +1,10 @@
 import components.Slack
 
 def call() {
+    echo("Start error");
     env.SUCCESS = "false";
+
+    echo(env.SUCCESS);
 
     if (env.GIT_REPO_NAME) {
         def slack = new Slack(this);
@@ -35,6 +38,8 @@ def call() {
             slackSend(message: "@here, build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed :face_with_monocle:", color: "danger");
         }
 
+    echo(env.SUCCESS);
+    echo("End error");
     // Return build start date
     return new Date(env.BUILD_START);
 }
