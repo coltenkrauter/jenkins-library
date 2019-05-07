@@ -40,9 +40,6 @@ def call(err) {
                 ]
             ]
         ];
-
-        // Post message in Slack thread and broadcast to channel
-        slack.postAttachment(env.BUILD_LOG_SLACK_THREAD, attachment);
     } else {
         attachment = [
             [
@@ -73,9 +70,10 @@ def call(err) {
                 ]
             ]
         ];
-
-        slack.postAttachment(attachment);
     }
+
+    /* Post message in Slack thread and broadcast to channel */
+    slack.postAttachment(env.BUILD_LOG_SLACK_THREAD, attachment);
 
     echo("Pipeline Failed: ${err}");
     throw(err);
