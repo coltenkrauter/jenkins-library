@@ -1,6 +1,8 @@
 import components.Slack
 
 def call(err) {
+    def slack = new Slack(this);
+
     env.SUCCESS = "false";
 
     /* Truncate error message to 100 chars*/
@@ -9,8 +11,6 @@ def call(err) {
         errMessage = errMessage.take(100) + "...";
 
     if (env.GIT_REPO_NAME) {
-        def slack = new Slack(this);
-
         attachment = [
             [
                 color: "danger",
