@@ -29,8 +29,16 @@ class Slack {
         }
     }
 
+    def postMessage(message) {
+        return pipeline.slackSend(message: message).threadId;
+    }
+
     def postMessage(channel, message) {
         return pipeline.slackSend(channel: channel, message: message).threadId;
+    }
+
+    def postAttachment(attachment) {
+        return pipeline.slackSend(attachments: JsonOutput.toJson(attachment)).threadId;
     }
 
     def postAttachment(channel, attachment) {
