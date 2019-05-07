@@ -16,7 +16,6 @@ class Slack {
             pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED = "true";
             pipeline.env.BUILD_LOG_SLACK_CHANNEL = "build-log";
             pipeline.env.BUILD_LOG_SLACK_THREAD = "";
-            pipeline.env.SUCCESS = "true";
         }
     }
     
