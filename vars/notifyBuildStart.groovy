@@ -65,7 +65,7 @@ def call() {
     ];
 
     // Post message to Slack
-    postAttachment(env.BUILD_LOG_SLACK_CHANNEL, attachment);
+    postAttachment(attachment);
 
     // Post message in Slack thread
     postMessageInThread("Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started");
