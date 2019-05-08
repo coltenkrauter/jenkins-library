@@ -1,6 +1,9 @@
 def call(err) {
     env.SUCCESS = "false";
 
+    /* Red */
+    color = "#e84118";
+
     /* Truncate error message to 100 chars*/
     errMessage = err.toString();
     if (errMessage.length() > 100)
@@ -9,7 +12,7 @@ def call(err) {
     if (env.GIT_BRANCH_NAME && env.GIT_REPO_NAME) {
         attachment = [
             [
-                color: "danger",
+                color: color,
                 fields: [
                     [
                         title: "Error",
@@ -33,7 +36,7 @@ def call(err) {
     } else {
         attachment = [
             [
-                color: "danger",
+                color: color,
                 fields: [
                     [
                         title: "Message",
