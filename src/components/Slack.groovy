@@ -125,15 +125,13 @@ class Slack {
         }
     }
 
-    def postMessageAPI(token) {
+    def postMessageAPI(TOKEN) {
         def body = [
-            token: token,
             channel: "#build-log",
             text: "Text here.",
             username: "otherusername",
         ];
-        pipeline.echo(JsonOutput.toJson(body));
-        pipeline.echo(JsonOutput.toJson(body).toString());
-        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body).toString());
+        
+        post("https://slack.com/api/chat.postMessage?token${TOKEN}", JsonOutput.toJson(body).toString());
     }
 }
