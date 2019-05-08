@@ -14,7 +14,7 @@ def call() {
 
     buildStartAttachment = getBuildStartAttachment();
     
-    if (!pipeline.env.BUILD_LOG_SLACK_CHANNEL_ID) {
+    if (!env.BUILD_LOG_SLACK_CHANNEL_ID) {
         // Post message to Slack
         postAttachment(buildStartAttachment);
     } else {
