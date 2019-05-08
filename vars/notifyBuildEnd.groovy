@@ -35,8 +35,8 @@ def call() {
     postAttachmentInThread(attachments);
 
     buildStartAttachment = getBuildStartAttachment();
-    buildStartAttachment[0].color = "blue";
-    buildStartAttachment[1].color = "blue";
+    buildStartAttachment[0].color = color;
+    buildStartAttachment[1].color = color;
 
     modifyBuildStartAttachment(buildStartAttachment);
     echo(logMessage);
