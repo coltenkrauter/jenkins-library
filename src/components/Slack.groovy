@@ -135,7 +135,7 @@ class Slack {
         }
     }
 
-    def postAttachment(token, attachments) {
+    def postAttachment(token, channel, attachments) {
         def body = [
             channel: "#build-log",
             attachments: attachments,
