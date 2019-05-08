@@ -38,7 +38,7 @@ def call() {
     buildStartAttachment[0].color = "blue";
     buildStartAttachment[1].color = "blue";
 
-    modifyBuildStartAttachment(attachment);
+    modifyBuildStartAttachment(buildStartAttachment);
     echo(logMessage);
 
     return new Date();

@@ -153,4 +153,14 @@ class Slack {
 
         post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
     }
+
+    def modifyBuildStartAttachment(token, attachments) {
+        def body = [
+            channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
+            attachments: attachments,
+            ts: pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS
+        ];
+
+        post("https://slack.com/api/chat.update", JsonOutput.toJson(body), token);
+    }
 }
