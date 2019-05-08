@@ -1,4 +1,4 @@
-call() {
+def call() {
     return [
         [
             color: "#f9ca24",
