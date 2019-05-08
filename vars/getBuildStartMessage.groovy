@@ -1,7 +1,7 @@
 call() {
     return [
         [
-            color: env.PROJECT_COLOR,
+            color: "#f9ca24",
             fallback: "${env.GIT_BRANCH_NAME} execution #${env.BUILD_NUMBER}",
             fields: [
                 [
