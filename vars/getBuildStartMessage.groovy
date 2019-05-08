@@ -1,7 +1,7 @@
 def call() {
     /* Yellow */
-    def color = "#f9ca24";
-    
+    def color = "#fff200";
+
     return [
         [
             color: color,
