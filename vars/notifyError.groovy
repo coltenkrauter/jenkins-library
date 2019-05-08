@@ -10,7 +10,7 @@ def call(err) {
     if (errMessage.length() > 100)
         errMessage = errMessage.take(100) + "...";
 
-    if (env.GIT_REPO_NAME) {
+    if (env.GIT_BRANCH_NAME && env.GIT_REPO_NAME) {
         attachment = [
             [
                 color: "danger",
