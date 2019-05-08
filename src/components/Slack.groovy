@@ -118,7 +118,7 @@ class Slack {
                 response = new JsonSlurper().parseText(http.errorStream.getText('UTF-8'));
             }
 
-            println "response: ${response}";
+            pipeline.echo("response: ${response}");
 
         } catch (Exception e) {
             // handle exception, e.g. Host unreachable, timeout etc.
