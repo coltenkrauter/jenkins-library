@@ -132,7 +132,8 @@ class Slack {
             text: "Text here.",
             username: "otherusername",
         ];
-
-        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body));
+        pipeline.echo(JsonOutput.toJson(body));
+        pipeline.echo(JsonOutput.toJson(body).toString());
+        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body).toString());
     }
 }
