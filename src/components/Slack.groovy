@@ -107,9 +107,8 @@ class Slack {
                 pipeline.env.BUILD_LOG_SLACK_CHANNEL_ID = response.channel;
             }
 
-            if (!pipeline.env.BUILD_LOG_SLACK_THREAD) {
+            if (!pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS) {
                 pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS = response.ts;
-                pipeline.env.BUILD_LOG_SLACK_THREAD = response.ts;
             }
         } catch (Exception e) {
             // handle exception, e.g. Host unreachable, timeout etc.
@@ -128,8 +127,9 @@ class Slack {
 
     def postAttachmentInThread(token, attachments) {
         def body = [
-            channel: pipeline.env.BUILD_LOG_SLACK_THREAD,
-            attachments: attachments
+            channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
+            attachments: attachments,
+            thread_ts: pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS
         ];
 
         post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
@@ -146,8 +146,9 @@ class Slack {
 
     def postMessageInThread(token, message) {
         def body = [
-            channel: pipeline.env.BUILD_LOG_SLACK_THREAD,
-            text: message
+            channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
+            text: message,
+            thread_ts: pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS
         ];
 
         post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
