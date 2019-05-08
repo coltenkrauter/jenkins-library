@@ -16,7 +16,7 @@ def call() {
         logMessage = "Build ${env.BUILD_NUMBER} finished successfully";
     }
 
-    attachment = [
+    attachments = [
         [
             color: color,
             fields: [
@@ -32,7 +32,13 @@ def call() {
         ]
     ];
 
-    postAttachmentInThread(attachment);
+    postAttachmentInThread(attachments);
+
+    buildStartAttachment = getBuildStartAttachment();
+    buildStartAttachment[0].color = "blue";
+    buildStartAttachment[1].color = "blue";
+
+    modifyBuildStartAttachment(attachment);
     echo(logMessage);
 
     return new Date();
