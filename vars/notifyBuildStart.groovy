@@ -12,9 +12,15 @@ def call() {
     }
     env.BUILD_TRIGGER_USER = build_user;
 
-    // Post message to Slack
-    postAttachment(getBuildStartAttachment());
-
+    buildStartAttachment = getBuildStartAttachment();
+    
+    if (!pipeline.env.BUILD_LOG_SLACK_CHANNEL_ID) {
+        // Post message to Slack
+        postAttachment(buildStartAttachment);
+    } else {
+        modifyBuildStartAttachment(buildStartAttachment);    
+    }
+    
     // Post message in Slack thread
     postMessageInThread("Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started");
 
