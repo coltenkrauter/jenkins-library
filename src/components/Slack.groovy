@@ -125,7 +125,7 @@ class Slack {
         }
     }
 
-    def postMessage(token) {
+    def postMessageAPI(token) {
         def body = [
             token: token,
             channel: "#build-log",
