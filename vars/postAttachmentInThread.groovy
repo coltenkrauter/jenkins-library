@@ -4,6 +4,6 @@ def call(ATTACHMENT) {
     def slack = new Slack(this);
     
     withCredentials([string(credentialsId: "slack-token", variable: "TOKEN")]) {
-        slack.postAttachment(TOKEN, ATTACHMENT);
+        slack.postAttachmentInThread(TOKEN, ATTACHMENT);
     }
 }

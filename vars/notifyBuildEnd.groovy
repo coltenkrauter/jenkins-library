@@ -30,7 +30,7 @@ def call() {
         ]
     ];
 
-    postAttachment(env.BUILD_LOG_SLACK_THREAD, attachment);
+    postAttachmentInThread(attachment);
     echo(logMessage);
 
     return new Date();

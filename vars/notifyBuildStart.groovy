@@ -68,7 +68,7 @@ def call() {
     postAttachment(env.BUILD_LOG_SLACK_CHANNEL, attachment);
 
     // Post message in Slack thread
-    postMessage(env.BUILD_LOG_SLACK_THREAD, "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started");
+    postMessageInThread("Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started");
 
     // Return build start date
     return new Date(env.BUILD_START);

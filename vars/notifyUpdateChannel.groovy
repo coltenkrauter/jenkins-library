@@ -1,5 +1,5 @@
 def call(MESSAGE) {
-    postMessage(env.BUILD_LOG_SLACK_CHANNEL, MESSAGE);
+    postMessageInThread(MESSAGE);
 
     return new Date();
 }

@@ -117,19 +117,37 @@ class Slack {
         }
     }
 
-    def postAttachment(token, channel, attachments) {
+    def postAttachment(token, attachments) {
         def body = [
-            channel: channel,
-            attachments: attachments,
+            channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
+            attachments: attachments
         ];
 
         post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
     }
 
-    def postMessage(token, channel, message) {
+    def postAttachmentInThread(token, attachments) {
         def body = [
-            channel: channel,
-            text: message,
+            channel: pipeline.env.BUILD_LOG_SLACK_THREAD,
+            attachments: attachments
+        ];
+
+        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
+    }
+
+    def postMessage(token, message) {
+        def body = [
+            channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
+            text: message
+        ];
+
+        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
+    }
+
+    def postMessageInThread(token, message) {
+        def body = [
+            channel: pipeline.env.BUILD_LOG_SLACK_THREAD,
+            text: message
         ];
 
         post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
