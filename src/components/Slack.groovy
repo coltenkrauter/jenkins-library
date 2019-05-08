@@ -122,6 +122,7 @@ class Slack {
 
         } catch (Exception e) {
             // handle exception, e.g. Host unreachable, timeout etc.
+            pipeline.echo("error: ${e}");
         }
     }
 }
