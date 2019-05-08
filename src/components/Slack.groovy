@@ -98,11 +98,10 @@ class Slack {
         return (value.toInteger() == 0 || value.toInteger() > 1) ? "s" : ""
     }
 
-    def post() {
+    def post(url, body) {
         try {
-            def body = '{"id": 120}';
-            def http = new URL("http://localhost:8080/your/target/url").openConnection() as HttpURLConnection;
-            http.setRequestMethod('POST');
+            def http = new URL(url).openConnection() as HttpURLConnection;
+            http.setRequestMethod("POST");
             http.setDoOutput(true);
             http.setRequestProperty("Accept", 'application/json');
             http.setRequestProperty("Content-Type", 'application/json');
@@ -124,5 +123,16 @@ class Slack {
             // handle exception, e.g. Host unreachable, timeout etc.
             pipeline.echo("error: ${e}");
         }
+    }
+
+    def postMessage() {
+        def body = [
+            token: "xoxb-2184481876-576704771890-Tx9XpMFsCVgBljG1r2jJpTbm",
+            channel: "#test-api-yet-again",
+            text: "Text here.",
+            username: "otherusername",
+        ];
+
+        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body));
     }
 }
