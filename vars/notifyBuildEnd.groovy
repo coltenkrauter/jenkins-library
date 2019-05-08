@@ -2,7 +2,7 @@ import components.Slack
 
 def call() {
     def slack = new Slack(this);
-    DURATION = slack.get_duration_string(new Date(env.BUILD_START), new Date());
+    DURATION = slack.getDurationString(new Date(env.BUILD_START), new Date());
 
     color = "danger";
     slackMessage = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed";

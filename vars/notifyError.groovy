@@ -1,8 +1,4 @@
-import components.Slack
-
 def call(err) {
-    def slack = new Slack(this);
-
     env.SUCCESS = "false";
 
     /* Truncate error message to 100 chars*/

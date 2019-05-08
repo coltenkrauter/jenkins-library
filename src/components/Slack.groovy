@@ -29,15 +29,7 @@ class Slack {
         }
     }
 
-    def postMessage(message) {
-        return pipeline.slackSend(message: message).threadId;
-    }
-
-    def postMessage(channel, message) {
-        return pipeline.slackSend(channel: channel, message: message).threadId;
-    }
-
-    def get_duration(start, end) {
+    def getDuration(start, end) {
         def duration = groovy.time.TimeCategory.minus(
           end,
           start
@@ -54,8 +46,8 @@ class Slack {
         return values;
     }
 
-    def get_duration_string(start, end) {
-        def values = get_duration(start, end)
+    def getDurationString(start, end) {
+        def values = getDuration(start, end)
 
         def seconds = values["seconds"]
         def message = "$seconds second" + plural(seconds)
@@ -124,14 +116,18 @@ class Slack {
 
     def postAttachment(token, channel, attachments) {
         def body = [
-            channel: "#build-log",
+            channel: channel,
             attachments: attachments,
         ];
 
-        // def body = [
-        //     channel: "#build-log",
-        //     text: "text",
-        // ];
+        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
+    }
+
+    def postMessage(token, channel, message) {
+        def body = [
+            channel: channel,
+            text: message,
+        ];
 
         post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
     }
