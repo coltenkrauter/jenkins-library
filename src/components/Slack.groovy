@@ -155,7 +155,7 @@ class Slack {
     }
 
     def modifyBuildStartAttachment(token, attachments) {
-        pipeline.echo(sh(script: 'env|sort', returnStdout: true));
+        pipeline.echo(pipeline.sh(script: 'env|sort', returnStdout: true));
         pipeline.echo("modifyBuildStartAttachment");
         def body = [
             channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
