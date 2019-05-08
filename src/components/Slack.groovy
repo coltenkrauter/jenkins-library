@@ -16,7 +16,6 @@ class Slack {
             // This will only be executed the first time Slack class is instantiated thanks to setting this env variable
             pipeline.env.SLACK_CONSTRUCTOR_WAS_INITIALIZED = "true";
             pipeline.env.BUILD_LOG_SLACK_CHANNEL = "build-log";
-            pipeline.env.BUILD_LOG_SLACK_THREAD = "";
         }
     }
     
@@ -36,18 +35,6 @@ class Slack {
 
     def postMessage(channel, message) {
         return pipeline.slackSend(channel: channel, message: message).threadId;
-    }
-
-    def postAttachment(attachment) {
-        return pipeline.slackSend(attachments: JsonOutput.toJson(attachment)).threadId;
-    }
-
-    // def postAttachment(channel, attachment) {
-    //     return pipeline.slackSend(channel: channel, attachments: JsonOutput.toJson(attachment)).threadId;
-    // }
-
-    def postAttachmentAndBroadcast(channel, attachment) {
-        return pipeline.slackSend(channel: channel, attachments: JsonOutput.toJson(attachment), replyBroadcast: true).threadId;
     }
 
     def get_duration(start, end) {
