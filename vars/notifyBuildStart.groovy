@@ -1,4 +1,9 @@
+import components.Slack
+
 def call() {
+    /* Instantiating Slack in order to set some environment vars */
+    def slack = new Slack(this);
+
     build_user = env.GIT_COMMITTER_NAME;
     wrap([$class: 'BuildUser']) {
         if (env.BUILD_USER) {
