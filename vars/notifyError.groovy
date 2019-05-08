@@ -22,7 +22,7 @@ def call(err) {
                 markdown: ["pretext"]
             ],
             [
-                color: "danger",
+                color: color,
                 fallback: "",
                 actions: [
                     [
@@ -50,7 +50,7 @@ def call(err) {
                 markdown: ["pretext"]
             ],
             [
-                color: "danger",
+                color: color,
                 fallback: "",
                 actions: [
                     [
