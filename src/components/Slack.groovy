@@ -98,13 +98,15 @@ class Slack {
         return (value.toInteger() == 0 || value.toInteger() > 1) ? "s" : ""
     }
 
-    def post(url, body) {
+    def post(url, body, token) {
         try {
             def http = new URL(url).openConnection() as HttpURLConnection;
             http.setRequestMethod("POST");
             http.setDoOutput(true);
             http.setRequestProperty("Accept", 'application/json');
             http.setRequestProperty("Content-Type", 'application/json');
+            http.setRequestProperty("Authorization", "Bearer ${token}");
+            
 
             http.outputStream.write(body.getBytes("UTF-8"));
             http.connect();
@@ -125,13 +127,13 @@ class Slack {
         }
     }
 
-    def postMessageAPI(TOKEN) {
+    def postMessageAPI(token) {
         def body = [
             channel: "#build-log",
             text: "Text here.",
             username: "otherusername",
         ];
-        
-        post("https://slack.com/api/chat.postMessage?token${TOKEN}", JsonOutput.toJson(body).toString());
+
+        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
     }
 }
