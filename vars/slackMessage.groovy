@@ -4,6 +4,9 @@ def call(STAGENAME) {
     def slack = new Slack(this);
     
     echo("About to send slack post");
-    slack.postMessage();
+    withCredentials([string(credentialsId: "slack-token", variable: 'TOKEN')]) {
+        slack.postMessage(TOKEN);
+    }
+    
     echo("Sent slack post");
 }

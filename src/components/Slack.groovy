@@ -125,10 +125,10 @@ class Slack {
         }
     }
 
-    def postMessage() {
+    def postMessage(token) {
         def body = [
-            token: "xoxb-2184481876-576704771890-Tx9XpMFsCVgBljG1r2jJpTbm",
-            channel: "#test-api-yet-again",
+            token: token,
+            channel: "#build-log",
             text: "Text here.",
             username: "otherusername",
         ];
