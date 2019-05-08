@@ -1,7 +1,10 @@
 def call() {
+    /* Yellow */
+    def color = "#f9ca24";
+    
     return [
         [
-            color: "#f9ca24",
+            color: color,
             fallback: "${env.GIT_BRANCH_NAME} execution #${env.BUILD_NUMBER}",
             fields: [
                 [
@@ -29,7 +32,7 @@ def call() {
             ts: (new Date(env.BUILD_START)).getTime() / 1000
         ],
         [
-            color: env.PROJECT_COLOR,
+            color: color,
             fallback: "",
             actions: [
                 [
