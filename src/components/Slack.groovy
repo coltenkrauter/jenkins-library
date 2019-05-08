@@ -42,9 +42,9 @@ class Slack {
         return pipeline.slackSend(attachments: JsonOutput.toJson(attachment)).threadId;
     }
 
-    def postAttachment(channel, attachment) {
-        return pipeline.slackSend(channel: channel, attachments: JsonOutput.toJson(attachment)).threadId;
-    }
+    // def postAttachment(channel, attachment) {
+    //     return pipeline.slackSend(channel: channel, attachments: JsonOutput.toJson(attachment)).threadId;
+    // }
 
     def postAttachmentAndBroadcast(channel, attachment) {
         return pipeline.slackSend(channel: channel, attachments: JsonOutput.toJson(attachment), replyBroadcast: true).threadId;
@@ -121,18 +121,30 @@ class Slack {
 
             pipeline.echo("response: ${response}");
 
+            if (!pipeline.env.BUILD_LOG_SLACK_CHANNEL_ID) {
+                pipeline.env.BUILD_LOG_SLACK_CHANNEL_ID = response.channel;
+            }
+
+            if (!pipeline.env.BUILD_LOG_SLACK_THREAD) {
+                pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS = response.ts;
+                pipeline.env.BUILD_LOG_SLACK_THREAD = response.ts;
+            }
         } catch (Exception e) {
             // handle exception, e.g. Host unreachable, timeout etc.
             pipeline.echo("error: ${e}");
         }
     }
 
-    def postMessageAPI(token) {
+    def postAttachment(token, attachments) {
         def body = [
             channel: "#build-log",
-            text: "Text here.",
-            username: "otherusername",
+            attachments: attachments,
         ];
+
+        // def body = [
+        //     channel: "#build-log",
+        //     text: "text",
+        // ];
 
         post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
     }

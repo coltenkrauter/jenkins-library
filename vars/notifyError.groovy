@@ -69,11 +69,7 @@ def call(err) {
     }
 
     /* Post message in Slack thread and broadcast to channel */
-    threadId = slack.postAttachment(env.BUILD_LOG_SLACK_THREAD, attachment);
-
-    if (!env.BUILD_LOG_SLACK_THREAD) {
-        env.BUILD_LOG_SLACK_THREAD = threadId;
-    }
+    postAttachment(env.BUILD_LOG_SLACK_THREAD, attachment);
 
     echo("Pipeline Failed: ${err}");
 

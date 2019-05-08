@@ -30,7 +30,7 @@ def call() {
         ]
     ];
 
-    slack.postAttachment(env.BUILD_LOG_SLACK_THREAD, attachment);
+    postAttachment(env.BUILD_LOG_SLACK_THREAD, attachment);
     echo(logMessage);
 
     return new Date();
