@@ -5,7 +5,7 @@ These instructions are intended to assist in setting up a jenkins shared library
 
 1. Create a GitHub repository per [Jenkins Guidelines](https://jenkins.io/doc/book/pipeline/shared-libraries/) regarding shared libraries
 	- Currently using: jenkins-library
-	- Groovy files are located in /src/library and have `package library` at the top of each file
+	- Groovy function files are located in `/vars`
 
 2. Configure Jenkins
 	- In Jenkins instance, navigate to Manage Jenkins > Configure System and scroll down to the *Global Pipeline Libraries* section
@@ -16,8 +16,8 @@ These instructions are intended to assist in setting up a jenkins shared library
 		- Include @Library changes in job recent changes: True
 		- Retrieval method: Modern SCM
 		- Source Code Management: GitHub
-		- Credentials: s-00078 (GitHub Enterprise Personal Access Token)
-		- Owner: OCC
+		- Credentials: Use a GitHub Personal Access Token credential
+		- Owner: This is often your GitHub username
 		- Repository: jenkins-library
 		- Behaviors: Discover branches, all branches
 
@@ -29,7 +29,3 @@ These instructions are intended to assist in setting up a jenkins shared library
 		@Library("jenkins-library@master")
 		import library.*
 	```
-	- In order to use the notify.groovy file, you must ensure that there is a yaml config file at /jenkins/config.yaml that is like [config.yaml/sample](https://scm.starbucks.com/OCC/jenkins-library/blob/master/src/library/config.yaml.sample)
-
-## Resources
-[Slack Plugin](https://github.com/jenkinsci/slack-plugin)
