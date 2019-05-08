@@ -155,6 +155,7 @@ class Slack {
     }
 
     def modifyBuildStartAttachment(token, attachments) {
+        pipeline.echo("modifyBuildStartAttachment");
         def body = [
             channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
             attachments: attachments,
@@ -162,5 +163,6 @@ class Slack {
         ];
 
         post("https://slack.com/api/chat.update", JsonOutput.toJson(body), token);
+        pipeline.echo("modifyBuildStartAttachment");
     }
 }
