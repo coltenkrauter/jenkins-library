@@ -3,7 +3,7 @@ package components;
 import groovy.json.JsonOutput;
 import groovy.json.JsonSlurper;
 import java.time.Instant;
-import configs.SlackConfig;
+import components.configs.SlackConfig;
 
 class Slack {
     def pipeline;
