@@ -8,7 +8,7 @@ def call() {
     color = "#e84118";
     slackMessage = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed";
     slackMessageFooter = "<${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> triggered by ${env.BUILD_TRIGGER_USER} failed :face_with_monocle:";
-    logMessage = "Build ${env.BUILD_NUMBER} failed";
+    logMessage = "Build #${env.BUILD_NUMBER} failed";
 
     if (env.GIT_BRANCH_NAME && env.GIT_REPO_NAME) {
         if (env.SUCCESS && env.SUCCESS == "true") {
@@ -16,7 +16,7 @@ def call() {
             color = "#2ecc71";
             slackMessage = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> finished successfully";
             slackMessageFooter = "<${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> triggered by ${env.BUILD_TRIGGER_USER} finished successfully";
-            logMessage = "Build ${env.BUILD_NUMBER} finished successfully";
+            logMessage = "Build #${env.BUILD_NUMBER} finished successfully";
         }
 
         attachments = [
