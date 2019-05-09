@@ -22,7 +22,7 @@ def call() {
     }
     
     // Post message in Slack thread
-    postMessage("Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started");
+    postSlackText("Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started");
 
     // Return build start date
     return new Date(env.BUILD_START);
