@@ -1,5 +1,5 @@
 def call(MESSAGE) {
-	postMessage(MESSAGE);
+    postSlackText(MESSAGE);
 
     return new Date();
 }

@@ -35,14 +35,14 @@ def call() {
             ]
         ];
 
-        postAttachment(attachments);
+        postSlackAttachment(attachments);
 
         buildStartAttachment = getBuildStartAttachment();
         buildStartAttachment[0].color = color;
         buildStartAttachment[0].footer = slackMessageFooter;
         buildStartAttachment[1].color = color;
 
-        modifyBuildStartAttachment(buildStartAttachment);
+        modifyFirstPost(buildStartAttachment);
     }
     
     echo(logMessage);

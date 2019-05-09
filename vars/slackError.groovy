@@ -64,7 +64,7 @@ def call(err) {
     }
 
     /* Post message in Slack thread and broadcast to channel */
-    postAttachment(attachment);
+    postSlackAttachment(attachment);
 
     echo("Pipeline Failed: ${err}");
 

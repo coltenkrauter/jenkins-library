@@ -16,9 +16,9 @@ def call() {
     
     if (!env.BUILD_LOG_SLACK_CHANNEL_ID) {
         // Post message to Slack
-        postAttachment(buildStartAttachment);
+        postSlackAttachment(buildStartAttachment);
     } else {
-        modifyBuildStartAttachment(buildStartAttachment);    
+        modifyFirstPost(buildStartAttachment);    
     }
     
     // Post message in Slack thread
