@@ -1,4 +1,4 @@
-package components.configs;
+package components;
 
 class SlackConfig {
     def getSlackChannel() {
