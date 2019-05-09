@@ -8,11 +8,6 @@ def call() {
             fallback: "${env.GIT_BRANCH_NAME} execution #${env.BUILD_NUMBER}",
             fields: [
                 [
-                    title: "Commiter",
-                    value: env.GIT_COMMITTER_NAME,
-                    short: true
-                ],
-                [
                     title: "Repository",
                     value: "<${env.GIT_REPO_URL}|${env.GIT_REPO_NAME}>",
                     short: true
@@ -20,6 +15,11 @@ def call() {
                 [
                     title: "Branch",
                     value: "<${env.GIT_BRANCH_URL}|${env.GIT_BRANCH_NAME}>",
+                    short: true
+                ],
+                [
+                    title: "Commiter",
+                    value: env.GIT_COMMITTER_NAME,
                     short: true
                 ]
             ],
