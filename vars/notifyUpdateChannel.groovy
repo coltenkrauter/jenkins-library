@@ -1,5 +1,5 @@
 def call(MESSAGE) {
-    postMessageInThread(MESSAGE);
+    postMessage(MESSAGE);
 
     return new Date();
 }

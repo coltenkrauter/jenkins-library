@@ -35,7 +35,7 @@ def call() {
             ]
         ];
 
-        postAttachmentInThread(attachments);
+        postAttachment(attachments);
 
         buildStartAttachment = getBuildStartAttachment();
         buildStartAttachment[0].color = color;

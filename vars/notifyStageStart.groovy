@@ -1,5 +1,5 @@
 def call(STAGENAME) {
-    postMessageInThread("Stage *${STAGENAME}* started");
+    postMessage("Stage *${STAGENAME}* started");
 
     return new Date();
 }

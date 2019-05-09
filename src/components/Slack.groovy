@@ -18,7 +18,7 @@ class Slack {
         }
 
         if (!pipeline.env.BUILD_LOG_SLACK_CHANNEL) {
-            pipeline.env.BUILD_LOG_SLACK_CHANNEL = "build-log";
+            pipeline.env.BUILD_LOG_SLACK_CHANNEL = "occ-build-log";
         }
     }
     
@@ -101,8 +101,6 @@ class Slack {
                 response = new JsonSlurper().parseText(http.errorStream.getText('UTF-8'));
             }
 
-            pipeline.echo("response: ${response}");
-
             if (!pipeline.env.BUILD_LOG_SLACK_CHANNEL_ID) {
                 pipeline.env.BUILD_LOG_SLACK_CHANNEL_ID = response.channel;
             }
@@ -116,23 +114,18 @@ class Slack {
         }
     }
 
+    def postToSlackAPI(body, token) {
+        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
+    }
+
     def postAttachment(token, attachments) {
         def body = [
             channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
             attachments: attachments
         ];
 
-        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
-    }
-
-    def postAttachmentInThread(token, attachments) {
-        def body = [
-            channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
-            attachments: attachments,
-            thread_ts: pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS
-        ];
-
-        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
+        body = addThreadTS(body);
+        postToSlackAPI(body, token);
     }
 
     def postMessage(token, message) {
@@ -141,22 +134,20 @@ class Slack {
             text: message
         ];
 
-        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
+        body = addThreadTS(body);
+        postToSlackAPI(body, token);
     }
 
-    def postMessageInThread(token, message) {
-        def body = [
-            channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL,
-            text: message,
-            thread_ts: pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS
-        ];
+    def addThreadTS(body) {
+        /* If this environment variable exists then post the message to in the thread */
+        if (pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS) {
+            body.thread_ts = pipeline.env.BUILD_LOG_SLACK_MESSAGE_TS;
+        }
 
-        post("https://slack.com/api/chat.postMessage", JsonOutput.toJson(body), token);
+        return body;
     }
-
+    
     def modifyBuildStartAttachment(token, attachments) {
-        pipeline.echo(pipeline.sh(script: 'env|sort', returnStdout: true));
-        pipeline.echo("modifyBuildStartAttachment");
         def body = [
             channel: pipeline.env.BUILD_LOG_SLACK_CHANNEL_ID,
             attachments: attachments,
@@ -164,6 +155,5 @@ class Slack {
         ];
 
         post("https://slack.com/api/chat.update", JsonOutput.toJson(body), token);
-        pipeline.echo("modifyBuildStartAttachment");
     }
 }
