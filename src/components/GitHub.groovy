@@ -13,6 +13,11 @@ class GitHub {
         if (!pipeline.env.GITHUB_CONSTRUCTOR_WAS_INITIALIZED) {
             // This will only be executed the first time GITHUB class is instantiated thanks to setting this env variable
             pipeline.env.GITHUB_CONSTRUCTOR_WAS_INITIALIZED = "true";
+
+            def config = new Config();
+            pipeline.env.GITHUB_API_URL = config.get("GITHUB_API_URL");
+            pipeline.env.GITHUB_TOKEN_CRED_ID = config.get("GITHUB_TOKEN_CRED_ID");
+            pipeline.env.GITHUB_URL = config.get("GITHUB_URL");
         }
     }
     
