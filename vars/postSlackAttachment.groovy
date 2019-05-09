@@ -1,4 +1,4 @@
-import components.Slack
+import components.Slack;
 
 def call(ATTACHMENT) {
     def slack = new Slack(this);

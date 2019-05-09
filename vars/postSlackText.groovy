@@ -1,4 +1,4 @@
-import components.Slack
+import components.Slack;
 
 def call(MESSAGE) {
     def slack = new Slack(this);

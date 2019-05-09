@@ -1,4 +1,4 @@
-import components.Slack
+import components.Slack;
 
 def call() {
     /* Instantiating Slack in order to set some environment vars */

@@ -1,4 +1,4 @@
-import components.GitHub
+import components.GitHub;
 
 def call() {
     def gitHub = new GitHub(this);
