@@ -19,7 +19,8 @@ class Slack {
         }
 
         if (!pipeline.env.BUILD_LOG_SLACK_CHANNEL) {
-            pipeline.env.BUILD_LOG_SLACK_CHANNEL = "build-log";
+            def config = new Config();
+            pipeline.env.BUILD_LOG_SLACK_CHANNEL = config.getSlackChannel();
         }
     }
     
