@@ -1,6 +1,6 @@
-package configs;
+package components.configs;
 
-class CoolConfig {
+class SlackConfig {
     def getSlackChannel() {
         return "build-log";
     }

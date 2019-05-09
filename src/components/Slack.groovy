@@ -3,7 +3,7 @@ package components;
 import groovy.json.JsonOutput;
 import groovy.json.JsonSlurper;
 import java.time.Instant;
-import configs.CoolConfig;
+import configs.SlackConfig;
 
 class Slack {
     def pipeline;
@@ -19,7 +19,7 @@ class Slack {
         }
 
         if (!pipeline.env.BUILD_LOG_SLACK_CHANNEL) {
-            def config = new CoolConfig();
+            def config = new SlackConfig();
             pipeline.env.BUILD_LOG_SLACK_CHANNEL = config.getSlackChannel();
         }
     }
