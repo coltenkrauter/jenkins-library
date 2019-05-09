@@ -1,6 +1,6 @@
 package configs;
 
-class SlackConfig {
+class Config {
     def getSlackChannel() {
         return "build-log";
     }
