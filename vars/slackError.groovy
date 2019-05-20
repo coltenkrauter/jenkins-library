@@ -28,7 +28,7 @@ def call(err) {
                     [
                         type: "button",
                         text: "Jenkins",
-                        url: env.RUN_DISPLAY_URL
+                        url: RUN_DISPLAY_URL
                     ]
                 ]
             ]
@@ -40,7 +40,7 @@ def call(err) {
                 fields: [
                     [
                         title: "Message",
-                        value: "@here, build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed :face_with_monocle:"
+                        value: "@here, build <${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> failed :face_with_monocle:"
                     ],
                     [
                         title: "Error",
@@ -56,7 +56,7 @@ def call(err) {
                     [
                         type: "button",
                         text: "Jenkins",
-                        url: env.RUN_DISPLAY_URL
+                        url: RUN_DISPLAY_URL
                     ]
                 ]
             ]
@@ -69,5 +69,5 @@ def call(err) {
     echo("Pipeline Failed: ${err}");
 
     // Return build start date
-    return new Date(env.BUILD_START);
+    return new Date(BUILD_START);
 }

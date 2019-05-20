@@ -4,7 +4,7 @@ def call() {
     /* Instantiating Slack in order to set some environment vars */
     def slack = new Slack(this);
 
-    build_user = env.GIT_COMMITTER_NAME;
+    build_user = GIT_COMMITTER_NAME;
     wrap([$class: 'BuildUser']) {
         if (env.BUILD_USER) {
             build_user = BUILD_USER;
@@ -14,7 +14,7 @@ def call() {
 
     buildStartAttachment = getBuildStartAttachment();
     
-    if (!env.BUILD_LOG_SLACK_CHANNEL_ID) {
+    if (!BUILD_LOG_SLACK_CHANNEL_ID) {
         // Post message to Slack
         postSlackAttachment(buildStartAttachment);
     } else {
@@ -22,8 +22,8 @@ def call() {
     }
     
     // Post message in Slack thread
-    postSlackText("Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> started");
+    postSlackText("Build <${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> started");
 
     // Return build start date
-    return new Date(env.BUILD_START);
+    return new Date(BUILD_START);
 }

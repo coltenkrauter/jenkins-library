@@ -1,53 +1,25 @@
 #!/usr/bin/env groovy
-
 /* This is an example Jenkinsfile to show how the jenkins-library may be used */
-@Library("jenkins-library@master")
 
-import hudson.model.*;
+@Library("jenkins-library@stable")
 
-env.BUILD_START = new Date();
-env.SUCCESS = "true";
+/* Import Environment in order to access env */
+import hudson.model.Environment;
 
-node {    
-    main();
-}
+newMain(this.&main);
 
 def main() {
-    try {
-        /* Post a message to Slack which will be overwritten when slackBuildStart() is executed */
-        slackPipelineStart();
-        
-        /* Checkout SCM and set up environment (set env variables) */
-        checkoutGit();
-        /* Must be called after the environment is all set up */
-        slackBuildStart();
+    /* Post a message to Slack which will be overwritten when slackBuildStart() is executed */
+    slackPipelineStart();
+    
+    /* Checkout SCM and set up environment (set env variables) */
+    checkoutGit();
+    
+    /* Must be called after the environment is all set up */
+    slackBuildStart();
 
-        newStage("Awesome first stage", this.&awesomeFirstStage);
-        newStage("Wonderful final stage", this.&wonderfulFinalStage);
-
-    } catch (err) {
-        /* Notify slack with error message */
-        slackError(err);
-        throw(err);
-
-    } catch(Throwable err) {
-        /* Notify slack with error message */
-        slackError(err);
-        throw(err);
-        
-    } finally {
-        /* Notify slack */
-        slackBuildEnd();
-    }
-}
-
-/* Wrap stage functions with the Slack notifications*/
-def newStage(stageName, Closure stageFunction) {
-    stage(stageName) {
-        startTime = slackStageStart(stageName);
-        stageFunction();
-        slackStageEnd(stageName, startTime, new Date());
-    }
+    newStage("Awesome first stage", this.&awesomeFirstStage);
+    newStage("Wonderful final stage", this.&wonderfulFinalStage);
 }
 
 def awesomeFirstStage() {

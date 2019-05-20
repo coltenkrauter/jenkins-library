@@ -2,21 +2,21 @@ import components.Slack;
 
 def call() {
     def slack = new Slack(this);
-    DURATION = slack.getDurationString(new Date(env.BUILD_START), new Date());
+    DURATION = slack.getDurationString(new Date(BUILD_START), new Date());
 
     /* Red */
     color = "#e84118";
-    slackMessage = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> failed";
-    slackMessageFooter = "<${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> triggered by ${env.BUILD_TRIGGER_USER} failed :face_with_monocle:";
-    logMessage = "Build #${env.BUILD_NUMBER} failed";
+    slackMessage = "Build <${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> failed";
+    slackMessageFooter = "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER} failed :face_with_monocle:";
+    logMessage = "Build #${BUILD_NUMBER} failed";
 
-    if (env.GIT_BRANCH_NAME && env.GIT_REPO_NAME) {
-        if (env.SUCCESS && env.SUCCESS == "true") {
+    if (GIT_BRANCH_NAME && GIT_REPO_NAME) {
+        if (SUCCESS && SUCCESS == "true") {
             /* Green */
             color = "#2ecc71";
-            slackMessage = "Build <${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> finished successfully";
-            slackMessageFooter = "<${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> triggered by ${env.BUILD_TRIGGER_USER} finished successfully";
-            logMessage = "Build #${env.BUILD_NUMBER} finished successfully";
+            slackMessage = "Build <${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> finished successfully";
+            slackMessageFooter = "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER} finished successfully";
+            logMessage = "Build #${BUILD_NUMBER} finished successfully";
         }
 
         attachments = [

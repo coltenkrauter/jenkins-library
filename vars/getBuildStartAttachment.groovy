@@ -5,26 +5,26 @@ def call() {
     return [
         [
             color: color,
-            fallback: "${env.GIT_BRANCH_NAME} execution #${env.BUILD_NUMBER}",
+            fallback: "${GIT_BRANCH_NAME} execution #${BUILD_NUMBER}",
             fields: [
                 [
                     title: "Repository",
-                    value: "<${env.GIT_REPO_URL}|${env.GIT_REPO_NAME}>",
+                    value: "<${GIT_REPO_URL}|${GIT_REPO_NAME}>",
                     short: true
                 ],
                 [
                     title: "Branch",
-                    value: "<${env.GIT_BRANCH_URL}|${env.GIT_BRANCH_NAME}>",
+                    value: "<${GIT_BRANCH_URL}|${GIT_BRANCH_NAME}>",
                     short: true
                 ],
                 [
                     title: "Commiter",
-                    value: env.GIT_COMMITTER_NAME,
+                    value: GIT_COMMITTER_NAME,
                     short: true
                 ]
             ],
-            footer: "<${env.RUN_DISPLAY_URL}|#${env.BUILD_NUMBER}> triggered by ${env.BUILD_TRIGGER_USER}",
-            ts: (new Date(env.BUILD_START)).getTime() / 1000
+            footer: "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER}",
+            ts: (new Date(BUILD_START)).getTime() / 1000
         ],
         [
             color: color,
@@ -33,7 +33,7 @@ def call() {
                 [
                     type: "button",
                     text: "Jenkins",
-                    url: env.RUN_DISPLAY_URL
+                    url: RUN_DISPLAY_URL
                 ]
             ]
         ]
