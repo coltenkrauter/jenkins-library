@@ -38,7 +38,7 @@ def call(String... args) {
         /* Clone ICC ansible/docker git repositories */
         withCredentials([string(credentialsId: config.get("GITHUB_TOKEN_CRED_ID"), variable: "TOKEN")]) {
             for (String ARG : args) {
-                sh "git clone -b master https://${TOKEN}@${GITHUB_URL}/${GITHUB_OWNER}/${ARG}.git";
+                sh "git clone -b master https://${TOKEN}@${GITHUB_URL.replace('https://', ''))}/${GITHUB_OWNER}/${ARG}.git";
 
                 if (ARG == "ansible") {
                     env.ANSIBLE_CONFIG = "${WORKSPACE}/ansible/ansible.cfg";
