@@ -11,6 +11,7 @@ def call(String... args) {
         def config = new Config();
         env.GITHUB_URL = config.get("GITHUB_URL");
         env.GITHUB_OWNER = config.get("GITHUB_OWNER");
+        env.GITHUB_TOKEN_CRED_ID = config.get("GITHUB_TOKEN_CRED_ID");
 
         /* Formulate the docker repo name from the jenkins job name 
            TODO: A better way to get the git repo name? */
@@ -36,7 +37,7 @@ def call(String... args) {
 
 
         /* Clone ICC ansible/docker git repositories */
-        withCredentials([string(credentialsId: "occ_dev-ghe_pat-secret-text", variable: "TOKEN")]) {
+        withCredentials([string(credentialsId: GITHUB_TOKEN_CRED_ID, variable: "TOKEN")]) {
             for (String ARG : args) {
                 sh "git clone -b development https://${TOKEN}@${GITHUB_URL}/${GITHUB_OWNER}/${ARG}.git";
 
