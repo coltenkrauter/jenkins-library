@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 /* This is an example Jenkinsfile to show how the jenkins-library may be used */
 
-@Library("jenkins-library@stable")
+@Library("jenkins-library@master")
 
 /* Import Environment in order to access env */
 import hudson.model.Environment;
