@@ -9,14 +9,7 @@ import hudson.model.Environment;
 newMain(this.&main);
 
 def main() {
-    /* Post a message to Slack which will be overwritten when slackBuildStart() is executed */
-    slackPipelineStart();
-    
-    /* Checkout SCM and set up environment (set env variables) */
-    checkoutGit();
-    
-    /* Must be called after the environment is all set up */
-    slackBuildStart();
+    initialize();
 
     newStage("Awesome first stage", this.&awesomeFirstStage);
     newStage("Wonderful final stage", this.&wonderfulFinalStage);
