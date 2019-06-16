@@ -6,7 +6,8 @@ class Config {
         GITHUB_API_URL: "https://api.github.com",
         GITHUB_OWNER: "coltenkrauter",
         GITHUB_TOKEN_CRED_ID: "github_pat_secret_text",
-        GITHUB_URL: "https://github.com"
+        GITHUB_URL: "github.com",
+        ANSIBLE_REPO: "ansible"
     ];
 
     @NonCPS
