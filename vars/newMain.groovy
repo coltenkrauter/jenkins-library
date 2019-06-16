@@ -4,6 +4,9 @@ def call(Closure main) {
     
     node {
         try {
+            /* Clears the Jenkins WORKSPACE directory */
+            clean();
+            initialize();
             main();
         } catch (err) {
             /* Notify slack with error message */
@@ -18,6 +21,7 @@ def call(Closure main) {
         } finally {
             /* Notify slack with error message */
             clean();
+            //TODO: Provide atExit() cleanup function handler
             slackBuildEnd();
         }
     }

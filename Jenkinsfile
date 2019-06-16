@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 /* This is an example Jenkinsfile to show how the jenkins-library may be used */
 
-@Library("jenkins-library@master")
+@Library("jenkins-library@development")
 
 /* Import Environment in order to access env */
 import hudson.model.Environment;
@@ -9,8 +9,6 @@ import hudson.model.Environment;
 newMain(this.&main);
 
 def main() {
-    initialize();
-
     newStage("Awesome first stage", this.&awesomeFirstStage);
     newStage("Wonderful final stage", this.&wonderfulFinalStage);
 }
