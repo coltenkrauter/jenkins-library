@@ -13,6 +13,7 @@ def call() {
         env.SOURCE_CODE_DIR = "${GIT_REPO_NAME}-${BUILD_NUMBER}";
         env.SOURCE_CODE = "${WORKSPACE}/${SOURCE_CODE_DIR}";
         env.ANSIBLE_REPO = config.get("ANSIBLE_REPO");
+        env.GITHUB_OWNER = config.get("GITHUB_OWNER");
 
         /* Checks out the code */
         dir (env.SOURCE_CODE_DIR) {
