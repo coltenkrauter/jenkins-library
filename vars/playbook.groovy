@@ -3,7 +3,7 @@ def call(ANSIBLE_PLAYBOOK, INVENTORY, EXTRA_VARS) {
         playbook: "${ANSIBLE_REPO}/${ANSIBLE_PLAYBOOK}.yaml",
         inventory: "${ANSIBLE_REPO}/inventories/${INVENTORY}/hosts",
         extras: "--extra-vars \"${EXTRA_VARS}\"",
-        credentialsId: "automation-ssh-private-key",
-        vaultCredentialsId:  "vault-id",
+        credentialsId: "ssh-key-ubuntu",
+        vaultCredentialsId:  "ansible-vault-password",
     );
 }
