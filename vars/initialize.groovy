@@ -24,17 +24,17 @@ def call() {
 
         /* Sets $ENVIRONMENT to one of (dev, cert, prod or feature) */
         env.ENVIRONMENT = 
-            env.BRANCH_NAME == "dev" ? 
+            env.BRANCH_NAME == "development" ? 
             "dev" : 
-            env.BRANCH_NAME == "master" ? 
+            env.BRANCH_NAME == "stable" ? 
             "cert" : 
             env.TAG != "" ? 
-            "prod" : "feature";
+            "prod" : "test";
 
         /* Clone specific branch of ansible repository */
         env.ANSIBLE_CLONE_BRANCH =
-            env.BRANCH_NAME == "dev" ? 
-                env.BRANCH_NAME : "master"
+            env.BRANCH_NAME == "development" ? 
+                env.BRANCH_NAME : "stable"
 
         /* Must be called after the environment is all set up */
         slackBuildStart();
