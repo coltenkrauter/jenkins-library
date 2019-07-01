@@ -7,7 +7,8 @@ class Config {
         GITHUB_OWNER: "coltenkrauter",
         GITHUB_TOKEN_CRED_ID: "github-pat-secret-text",
         GITHUB_URL: "github.com",
-        ANSIBLE_REPO: "ansible"
+        ANSIBLE_REPO: "ansible",
+        PIPELINE_TIMEOUT_MINUTES: 30
     ];
 
     @NonCPS

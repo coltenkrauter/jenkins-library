@@ -31,22 +31,21 @@ def call() {
             env.TAG != "" ? 
             "prod" : "feature";
 
-
         /* Clone specific branch of ansible repository */
         env.ANSIBLE_CLONE_BRANCH =
             env.BRANCH_NAME == "dev" ? 
                 env.BRANCH_NAME : "master"
 
-        /* Clone ICC ansible/docker git repositories */
-        withCredentials([string(credentialsId: env.GITHUB_TOKEN_CRED_ID, variable: "TOKEN")]) {
-
-            sh "git clone -b ${ANSIBLE_CLONE_BRANCH} https://${TOKEN}@${GITHUB_URL}/${GITHUB_OWNER}/${ANSIBLE_REPO}.git";
-        }
-
-        /* Needed for ansible plays to recognize configuration file */
-        env.ANSIBLE_CONFIG = "${WORKSPACE}/${ANSIBLE_REPO}/ansible.cfg";
-
         /* Must be called after the environment is all set up */
         slackBuildStart();
+    }
+
+    stageName = "Clone ansible repository";
+    stage(stageName) {
+        startTime = slackStageStart(stageName);
+        withCredentials([string(credentialsId: env.GITHUB_TOKEN_CRED_ID, variable: "TOKEN")]) {
+            sh "git clone -b ${ANSIBLE_CLONE_BRANCH} https://${TOKEN}@${GITHUB_URL}/${GITHUB_OWNER}/${ANSIBLE_REPO}.git";
+        }
+        slackStageEnd(stageName, startTime, new Date());
     }
 }

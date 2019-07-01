@@ -1,28 +1,46 @@
+import components.Config;
+import components.Slack;
+
 def call(Closure main) {
+    def config = new Config();
+
     env.BUILD_START = new Date();
     env.SUCCESS = "true";
+    env.PIPELINE_TIMEOUT_MINUTES = config.get("PIPELINE_TIMEOUT_MINUTES")
     
-    node {
-        try {
-            /* Clears the Jenkins WORKSPACE directory */
-            clean();
-            initialize();
-            main();
-        } catch (err) {
-            /* Notify slack with error message */
-            slackError(err);
-            throw(err);
+    timeout(time: env.PIPELINE_TIMEOUT_MINUTES, unit: 'MINUTES') {
+        node {
+            try {
+                /* Clears the Jenkins WORKSPACE directory */
+                clean();
+                initialize();
+                main();
+            } catch (err) {
+                /* Check if failure was due to timeout */
+                def slack = new Slack(this);
+                duration = slack.getDuration(new Date(BUILD_START), new Date());
+                timeout = duration.minutes.toInteger() >= env.PIPELINE_TIMEOUT_MINUTES.toInteger();
 
-        } catch(Throwable err) {
-            /* Notify slack with error message */
-            slackError(err);
-            throw(err);
-            
-        } finally {
-            /* Notify slack with error message */
-            clean();
-            //TODO: Provide atExit() cleanup function handler
-            slackBuildEnd();
+                if(timeout) {
+                    slackError("Build failed due to timeout. ");
+                } else {
+                    slackError(err);
+                }
+
+                echo err.toString()
+                throw(err);
+
+            } catch(Throwable err) {
+                /* Notify slack with error message */
+                slackError(err);
+                echo err.toString()
+                throw(err);
+                
+            } finally {
+                /* Notify slack with error message */
+                clean();
+                slackBuildEnd();
+            }
         }
     }
 }
