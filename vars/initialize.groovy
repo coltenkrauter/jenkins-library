@@ -43,7 +43,7 @@ def call() {
     stageName = "Clone ansible repository";
     stage(stageName) {
         startTime = slackStageStart(stageName);
-        withCredentials([string(credentialsId: env.GITHUB_TOKEN_CRED_ID, variable: "TOKEN")]) {
+        withCredentials([string(credentialsId: GITHUB_TOKEN_CRED_ID, variable: "TOKEN")]) {
             sh "git clone -b ${ANSIBLE_CLONE_BRANCH} https://${TOKEN}@${GITHUB_URL}/${GITHUB_OWNER}/${ANSIBLE_REPO}.git";
         }
         slackStageEnd(stageName, startTime, new Date());
