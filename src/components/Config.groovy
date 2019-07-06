@@ -8,7 +8,9 @@ class Config {
         GITHUB_TOKEN_CRED_ID: "github-pat-secret-text",
         GITHUB_URL: "github.com",
         ANSIBLE_REPO: "ansible",
-        PIPELINE_TIMEOUT_MINUTES: 30
+        ANSIBLE_SSH_PRIVATE_KEY_ID: "ssh-key-ubuntu",
+        ANSIBLE_VAULT_PASSWORD_ID: "ansible-vault-password",
+        PIPELINE_TIMEOUT_MINUTES: 30,
     ];
 
     @NonCPS
