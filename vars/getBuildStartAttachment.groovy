@@ -1,6 +1,11 @@
 def call() {
     /* Yellow */
-    def color = "#f4e004";
+    color = "#f4e004";
+
+    footer = "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER}"
+    if(BUILD_NUMBER == "1") {
+        footer = "<${RUN_DISPLAY_URL}|First build!> :right-facing_fist::left-facing_fist:"
+    }
 
     return [
         [
@@ -23,7 +28,7 @@ def call() {
                     short: true
                 ]
             ],
-            footer: "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER}",
+            footer: footer,
             ts: (new Date(BUILD_START)).getTime() / 1000
         ],
         [

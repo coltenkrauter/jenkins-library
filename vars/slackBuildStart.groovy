@@ -21,9 +21,6 @@ def call() {
         modifyFirstPost(buildStartAttachment);    
     }
     
-    // Post message in Slack thread
-    postSlackText("Build <${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> started");
-
     // Return build start date
     return new Date(BUILD_START);
 }

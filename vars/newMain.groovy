@@ -11,7 +11,6 @@ def call(Closure main) {
     timeout(time: env.PIPELINE_TIMEOUT_MINUTES, unit: 'MINUTES') {
         node {
             try {
-                /* Clears the Jenkins WORKSPACE directory */
                 clean();
                 initialize();
                 main();
@@ -21,23 +20,25 @@ def call(Closure main) {
                 duration = slack.getDuration(new Date(BUILD_START), new Date());
                 timeout = duration.minutes.toInteger() >= env.PIPELINE_TIMEOUT_MINUTES.toInteger();
 
-                if(timeout) {
-                    slackError("Build failed due to timeout. ");
-                } else {
-                    slackError(err);
+                if(err.getMessage() == "no-build") {
+                    slackError("Stopping build due to \"no-build\" flag in commit message.");
+                } else{
+                    if(timeout) {
+                        slackError("Build failed due to timeout. ");
+                    } else {
+                        slackError(err);
+                    }
+
+                    echo err.toString()
+                    throw(err);
                 }
 
-                echo err.toString()
-                throw(err);
-
             } catch(Throwable err) {
-                /* Notify slack with error message */
                 slackError(err);
                 echo err.toString()
                 throw(err);
                 
             } finally {
-                /* Notify slack with error message */
                 clean();
                 slackBuildEnd();
             }
