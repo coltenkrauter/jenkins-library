@@ -2,7 +2,7 @@ def call(err) {
     env.SUCCESS = "false";
 
     /* Red */
-    color = "#e84118";
+    color = "#db1412";
 
     /* Truncate error message to 100 chars*/
     errMessage = err.toString();

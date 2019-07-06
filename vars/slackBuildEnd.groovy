@@ -5,17 +5,27 @@ def call() {
     DURATION = slack.getDurationString(new Date(BUILD_START), new Date());
 
     /* Red */
-    color = "#e84118";
-    slackMessage = "Build <${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> failed";
-    slackMessageFooter = "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER} failed :face_with_monocle:";
+    color = "#db1412";
+    message = "Build <${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> failed";
+    footer = "<${RUN_DISPLAY_URL}|First build> failed :face_with_monocle:";
     logMessage = "Build #${BUILD_NUMBER} failed";
 
-    if (GIT_BRANCH_NAME && GIT_REPO_NAME) {
+    if(env.BUILD_TRIGGER_USER) {
+        if(BUILD_NUMBER != "1") {
+            footer = "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER} failed :face_with_monocle:";
+        }
+    } 
+
+    if (env.GIT_BRANCH_NAME && env.GIT_REPO_NAME && env.BUILD_TRIGGER_USER && (!env.NO_BUILD || env.NO_BUILD == "false")) {
         if (SUCCESS && SUCCESS == "true") {
             /* Green */
-            color = "#2ecc71";
-            slackMessage = "Build <${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> finished successfully";
-            slackMessageFooter = "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER} finished successfully";
+            color = "#2eb885";
+            message = "Build <${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> finished successfully";
+            footer = "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER} finished successfully";
+            if(BUILD_NUMBER == "1") {
+                footer = "<${RUN_DISPLAY_URL}|First build> finished successfully :right-facing_fist::left-facing_fist:";
+            }
+
             logMessage = "Build #${BUILD_NUMBER} finished successfully";
         }
 
@@ -25,7 +35,7 @@ def call() {
                 fields: [
                     [
                         title: "Message",
-                        value: slackMessage
+                        value: message
                     ],
                     [
                         title: "Duration",
@@ -39,9 +49,36 @@ def call() {
 
         buildStartAttachment = getBuildStartAttachment();
         buildStartAttachment[0].color = color;
-        buildStartAttachment[0].footer = slackMessageFooter;
+        buildStartAttachment[0].footer = footer;
+        buildStartAttachment[0].fields.push(
+            [
+                title: "Duration",
+                value: DURATION,
+                short: true
+            ]
+        )
+        
         buildStartAttachment[1].color = color;
+        modifyFirstPost(buildStartAttachment);
+    } else if (env.NO_BUILD && env.NO_BUILD == "true" && env.BUILD_TRIGGER_USER) {
 
+        /* Blue */
+        color = "#4593ff";
+        footer = "<${RUN_DISPLAY_URL}|#${BUILD_NUMBER}> triggered by ${BUILD_TRIGGER_USER} has been skipped";
+        logMessage = "Build #${BUILD_NUMBER} has been skipped";
+
+        buildStartAttachment = getBuildStartAttachment();
+        buildStartAttachment[0].color = color;
+        buildStartAttachment[0].footer = footer;
+        buildStartAttachment[0].fields.push(
+            [
+                title: "Duration",
+                value: DURATION,
+                short: true
+            ]
+        )
+
+        buildStartAttachment[1].color = color;
         modifyFirstPost(buildStartAttachment);
     }
     
