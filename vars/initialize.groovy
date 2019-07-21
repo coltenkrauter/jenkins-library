@@ -18,15 +18,6 @@ def call() {
         /* Needed for ansible plays to recognize configuration file */
         env.ANSIBLE_CONFIG = "${WORKSPACE}/${ANSIBLE_REPO}/ansible.cfg";
 
-        /* Set $ENVIRONMENT to one of (dev, cert, prod or test) */
-        env.ENVIRONMENT = 
-            env.BRANCH_NAME == "development" ? 
-            "dev" : 
-            env.BRANCH_NAME == "stable" ? 
-            "cert" : 
-            env.TAG != "" ? 
-            "prod" : "test";
-
         /* Set which branch of ansible repository to clone */
         env.ANSIBLE_CLONE_BRANCH =
             env.BRANCH_NAME == "development" ? 
@@ -42,7 +33,15 @@ def call() {
             checkoutGit();
             /* Set tag env var (this will be an empty string if it is not tagged) */
             env.TAG = sh(returnStdout: true, script: "git tag --contains | head -1").trim();
-            env.NO_BUILD = env.GIT_COMMIT_MESSAGE.contains("no-build")
+            env.NO_BUILD = env.GIT_COMMIT_MESSAGE.contains("no-build");
+            /* Set $ENVIRONMENT to one of (dev, cert, prod or test) */
+            env.ENVIRONMENT = 
+                env.BRANCH_NAME == "development" ? 
+                "dev" : 
+                env.BRANCH_NAME == "stable" ? 
+                "cert" : 
+                env.TAG != "" ? 
+                "prod" : "test";
         }
         slackUpdate();
         slackStageEnd(stageName, startTime, new Date());
