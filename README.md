@@ -1,3 +1,7 @@
+`DEPRECATED`
+
+This repo is no longer maintained. I am keeping it around for reference for devs that want to write some groovy.
+
 # Jenkins Library
 Instructions for setting up this Jenkins pipeline library which will query GitHub for the corresponding commit payload, save the commit author as an environment variable which is then used in the Slack notifier which posts messages as a bot user to your build-log slack channel.
 
